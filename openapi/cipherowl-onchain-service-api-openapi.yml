@@ -1,0 +1,305 @@
+openapi: 3.0.3
+info:
+  title: CipherOwl Onchain Service API
+  description: CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).
+  version: 2.1.0
+servers:
+- url: https://svc.cipherowl.ai
+security:
+- BearerAuth: []
+tags:
+- name: Onchain Service
+  description: Query blockchain balances and supported chain metadata across multiple networks.
+paths:
+  /api/onchain/v1/chains/{chain}/balances:batchget:
+    post:
+      summary: Batch get balances
+      description: Retrieves balance information for up to 100 addresses on the same blockchain in a single efficient request. Partial failures are supported - if some addresses fail, successful results are still returned with error details for failed addresses.
+      operationId: OnChainService_BatchGetBalance
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1BatchGetBalanceResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: chain
+        description: Network identifier - all addresses must be on this chain
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bitcoin
+      tags:
+      - Onchain Service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnChainServiceBatchGetBalanceBody'
+  /api/onchain/v1/chains/{chain}/addresses/{address}/balance:
+    get:
+      summary: Get balance
+      description: Retrieves native currency balance and token holdings for a single blockchain address. Token balances are automatically included for chains that support them (Ethereum, Solana, XRP, Avalanche, etc.).
+      operationId: OnChainService_GetBalance
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetBalanceResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: chain
+        description: Network identifier (bitcoin_mainnet, ethereum_mainnet, ethereum_classic_mainnet, xrp_mainnet, solana_mainnet, etc.)
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bitcoin
+      - name: address
+        description: Blockchain address to query (format depends on chain)
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+      tags:
+      - Onchain Service
+  /api/onchain/v1/chains:
+    get:
+      summary: List chains
+      description: Returns metadata for all blockchain networks supported by this service, including chain identifiers, names, native units, and token support capabilities.
+      operationId: OnChainService_GetSupportedChains
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/onchainv1GetSupportedChainsResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      tags:
+      - Onchain Service
+      parameters: []
+components:
+  schemas:
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    OnChainServiceBatchGetBalanceBody:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+          title: List of blockchain addresses to query (1-100 addresses)
+      description: 'Batch request for efficient multi-address queries on a single blockchain.
+
+        All addresses must be on the same network.
+
+
+        **Performance:**
+
+        - Single API call for up to 100 addresses
+
+        - Faster than individual requests
+
+        - Partial failures are handled gracefully'
+      title: Request for retrieving balances of multiple addresses
+    v1BatchGetBalanceResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Network identifier matching the request
+        balances:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1Balance'
+          title: Balance information for each queried address (same order as request)
+      description: 'Returns balance data for all requested addresses.
+
+        If individual addresses fail, their error field will contain details while other addresses return successfully.'
+      title: Response containing balance information for multiple addresses
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    onchainv1GetSupportedChainsResponse:
+      type: object
+      properties:
+        chains:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1ChainInfo'
+          title: List of all supported blockchain networks with metadata
+      description: 'Returns metadata for all supported networks, useful for discovering available chains
+
+        and their capabilities before making balance queries.'
+      title: Response containing list of supported blockchain chains
+    v1GetBalanceResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Chain identifier matching the request
+        balance:
+          $ref: '#/components/schemas/v1Balance'
+          title: Balance information including native and token balances
+      description: 'Returns the native currency balance and any token holdings for the requested address.
+
+        For chains that don''t support tokens, the tokens array will be empty.'
+      title: Response containing balance information for a single address
+    v1ChainInfo:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Unique network identifier for use in balance queries (e.g., "bitcoin_mainnet", "ethereum_mainnet")
+        name:
+          type: string
+          title: Full human-readable chain name for display (e.g., "Bitcoin", "Ethereum", "XRP Ledger")
+        symbol:
+          type: string
+          title: Native unit symbol used in Balance responses (e.g., "satoshi", "wei", "drop", "lamport")
+        supportsTokens:
+          type: boolean
+          title: Whether this chain supports querying token balances (true for Ethereum, Solana, XRP, Avalanche)
+      description: 'Provides essential information about each supported blockchain, including:
+
+        - Unique identifier for use in API requests
+
+        - Human-readable name for display purposes
+
+        - Native unit information for balance interpretation
+
+        - Token support capability
+
+
+        **Chain Identifiers:**
+
+        Currently supported chains include:
+
+        - bitcoin_mainnet, dogecoin_mainnet, litecoin_mainnet, bitcoin_cash_mainnet
+
+        - ethereum_mainnet, ethereum_classic_mainnet, avalanche_mainnet
+
+        - solana_mainnet, xrp_mainnet
+
+        - cardano_mainnet, polkadot_mainnet, stellar_mainnet, hedera_mainnet (coming soon)'
+      title: Metadata about a supported blockchain network
+    v1TokenBalance:
+      type: object
+      properties:
+        contract:
+          type: string
+          title: Token contract address or identifier (e.g., 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48 for USDC on Ethereum)
+        name:
+          type: string
+          title: Human-readable token name (e.g., "USD Coin", "Wrapped Bitcoin")
+        symbol:
+          type: string
+          title: Token symbol (e.g., "USDC", "USDT", "WBTC")
+        balance:
+          type: string
+          title: Token balance in smallest unit as string (to preserve precision for large numbers)
+        decimals:
+          type: integer
+          format: int32
+          title: Number of decimal places for the token (typically 6-18)
+        type:
+          type: string
+          title: Token standard (e.g., "ERC-20", "SPL", "XRC-20")
+      description: 'Represents a single token holding (ERC-20, SPL, XRC-20, etc.) with full metadata.
+
+        Balance amounts are returned as strings to preserve precision for large numbers.
+
+
+        **Decimal Conversion Example:**
+
+        If balance="1000000" and decimals=6, the human-readable amount is 1.0 tokens'
+      title: Information about a token balance held by an address
+    v1Balance:
+      type: object
+      properties:
+        address:
+          type: string
+          title: Blockchain address that was queried
+        balance:
+          type: string
+          title: Native balance in smallest unit (satoshi, wei, lamport, drop) as string
+        unit:
+          type: string
+          title: Unit name of the native balance (e.g., "satoshi", "wei", "lamport", "drop")
+        tokens:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1TokenBalance'
+          title: List of token balances held by this address (empty for non-token chains)
+        error:
+          type: string
+          title: Error message if the address query failed (empty string on success)
+      description: 'Contains the native currency balance and any token holdings.
+
+        Amounts are returned as strings in the smallest unit to preserve precision.
+
+
+        **Native Balance Units:**
+
+        - Bitcoin: satoshi (1 BTC = 100,000,000 satoshi)
+
+        - Ethereum/Ethereum Classic: wei (1 ETH = 1,000,000,000,000,000,000 wei)
+
+        - Solana: lamport (1 SOL = 1,000,000,000 lamport)
+
+        - XRP: drop (1 XRP = 1,000,000 drops)
+
+
+        **Error Handling:**
+
+        If an error occurs (invalid address, network issue, etc.), the error field will contain details
+
+        and the balance/tokens fields may be empty or partial.'
+      title: Balance information for a blockchain address
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 access token obtained from /oauth/token using client credentials.

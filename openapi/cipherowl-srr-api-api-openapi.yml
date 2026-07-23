@@ -1,0 +1,986 @@
+openapi: 3.0.3
+info:
+  title: CipherOwl Onchain Service SRR API API
+  description: CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).
+  version: 2.1.0
+servers:
+- url: https://svc.cipherowl.ai
+security:
+- BearerAuth: []
+tags:
+- name: SRR API
+  description: Screen blockchain addresses for risk, retrieve risk reasons, breakdowns, scores, and generate reports.
+paths:
+  /api/report/v1/graph/chains/{chain}/addresses/{address}:
+    get:
+      tags:
+      - SRR API
+      summary: Get risk flow graph
+      description: Returns a risk-flow diagram for an address that visualizes how funds move between it and the risky entities it is exposed to. The diagram is available as Mermaid markup, an interactive HTML wrapper, or a rendered PNG image, making it suitable for embedding in reports or investigation UIs.
+      operationId: graph_api
+      parameters:
+      - name: chain
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'
+          title: Chain
+          example: bitcoin
+        description: Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'
+      - name: address
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Blockchain address to analyze
+          title: Address
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+        description: Blockchain address to analyze
+      - name: config
+        in: query
+        required: false
+        schema:
+          description: Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list.
+          title: Config
+          type: string
+          nullable: true
+        description: Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list.
+      - name: output_format
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: ^(mermaid|html|png)$
+          description: 'Output format: ''mermaid'' for diagram only, ''html'' for interactive wrapper, ''png'' for rendered image'
+          default: mermaid
+          title: Output Format
+        description: 'Output format: ''mermaid'' for diagram only, ''html'' for interactive wrapper, ''png'' for rendered image'
+      - name: interactive
+        in: query
+        required: false
+        schema:
+          type: boolean
+          description: Include interactive features (tooltips, click-to-copy). Ignored for PNG format.
+          default: true
+          title: Interactive
+        description: Include interactive features (tooltips, click-to-copy). Ignored for PNG format.
+      responses:
+        '200':
+          description: Risk flow diagram
+          content:
+            application/json:
+              schema:
+                properties:
+                  graph:
+                    title: Graph
+                    type: string
+                    nullable: true
+                  error:
+                    title: Error
+                    type: string
+                    nullable: true
+                  timestamp:
+                    format: date-time
+                    title: Timestamp
+                    type: string
+                required:
+                - timestamp
+                title: EmbeddedMermaidGraph
+                type: object
+            image/png:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+        '403':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /api/report/v1/risk-assessment/chains/{chain}/addresses/{address}:
+    get:
+      tags:
+      - SRR API
+      summary: Get risk assessment report
+      description: Generates a human-readable risk-assessment report for an address, synthesizing its screening result and risk reasons into an analyst-ready narrative with supporting evidence. Use it to produce compliance documentation without manually assembling the underlying screen, reason, and breakdown data.
+      operationId: risk_assessment_api
+      parameters:
+      - name: chain
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Blockchain network identifier
+          title: Chain
+          example: bitcoin
+        description: Blockchain network identifier
+      - name: address
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Blockchain address to analyze
+          title: Address
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+        description: Blockchain address to analyze
+      - name: config
+        in: query
+        required: false
+        schema:
+          description: Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list.
+          title: Config
+          type: string
+          nullable: true
+        description: Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list.
+      responses:
+        '200':
+          description: Returns detailed risk assessment for blockchain address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceReport'
+        '400':
+          description: Bad Request
+        '403':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /api/reason/v2/chains/{chain}/addresses/{address}/risk-breakdown:
+    get:
+      summary: Get risk breakdown
+      description: Returns a categorized summary of an address's risk exposures — the set of matched risk categories and whether each exposure is direct or indirect — without the full per-path evidence. It is a lighter-weight view than the detail endpoint, intended for rendering an at-a-glance risk profile or dashboard for an address.
+      operationId: RiskReasonService_GetAddressRiskBreakdown2
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetAddressRiskBreakdownResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: chain
+        description: The blockchain network (e.g., bitcoin, evm, tron)
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bitcoin
+      - name: address
+        description: The blockchain address to analyze
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+      - name: config
+        description: 'Selects the risk configuration (preconfigured risk model — categories,
+
+          hop depths, thresholds) to apply for this address. Accepted values are
+
+          moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix
+
+          with `co-` to reference a CipherOwl-managed configuration. An
+
+          unprefixed name resolves against your organization''s customized
+
+          configurations. When omitted or empty, the server resolves
+
+          your organization''s default configuration for the requested chain and
+
+          returns the resolved name on the response. See
+
+          https://readme.cipherowl.ai/reference/parameters for the current list.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hops
+        description: 'Optional hop depth limit. Caps the max hops used for filtering risk results.
+
+          Must be between 0 and 8. When omitted, uses the config''s default hops.'
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      tags:
+      - SRR API
+  /api/reason/v2/chains/{chain}/addresses/{address}/detail:
+    get:
+      summary: Get risk detail
+      description: Returns the most detailed risk explanation for an address. For each matched risk category and transaction direction it includes the number of hops to the risky entity, total USD and percentage exposure, first/last exposure timestamps, and the actual transaction paths (including cross-chain paths) connecting the address to risky entities. Use it when you need the full evidence behind a risky verdict — for investigations, case files, or audit trails.
+      operationId: RiskReasonService_GetAddressRiskReasonDetail
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetAddressRiskReasonDetailResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: chain
+        description: The blockchain network (e.g., bitcoin, evm, tron)
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bitcoin
+      - name: address
+        description: The blockchain address to analyze
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+      - name: config
+        description: 'Selects the risk configuration (preconfigured risk model — categories,
+
+          hop depths, thresholds) to apply for this address. Accepted values are
+
+          moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix
+
+          with `co-` to reference a CipherOwl-managed configuration. An
+
+          unprefixed name resolves against your organization''s customized
+
+          configurations. When omitted or empty, the server resolves
+
+          your organization''s default configuration for the requested chain and
+
+          returns the resolved name on the response. See
+
+          https://readme.cipherowl.ai/reference/parameters for the current list.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hops
+        description: 'Optional hop depth limit. Caps the max hops used for filtering risk results.
+
+          Must be between 0 and 8. When omitted, uses the config''s default hops.'
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      tags:
+      - SRR API
+  /api/reason/v2/chains/{chain}/addresses/{address}/risk-score:
+    get:
+      summary: Get risk score
+      description: Computes a deterministic 0–100 risk score for an address from its exposure profile. Use it for risk tiering, threshold-based alerting, and automated decisioning where a single comparable numeric value is more convenient than the categorical reason or breakdown views.
+      operationId: RiskReasonService_GetAddressRiskScore
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetAddressRiskScoreResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: chain
+        description: The blockchain network (e.g., bitcoin, evm, tron)
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bitcoin
+      - name: address
+        description: The blockchain address to analyze
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+      - name: config
+        description: 'Selects the risk configuration (preconfigured risk model — categories,
+
+          hop depths, thresholds) to apply for this address. Accepted values are
+
+          moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix
+
+          with `co-` to reference a CipherOwl-managed configuration. An
+
+          unprefixed name resolves against your organization''s customized
+
+          configurations. When omitted or empty, the server resolves
+
+          your organization''s default configuration for the requested chain and
+
+          returns the resolved name on the response. See
+
+          https://readme.cipherowl.ai/reference/parameters for the current list.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: riskProfile
+        description: Risk profile name (e.g., "sanction_focused"). Uses default profile if empty.
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hops
+        description: 'Optional hop depth limit. Caps the max hops used for filtering risk results.
+
+          Must be between 0 and 8. When omitted, uses the config''s default hops.'
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      tags:
+      - SRR API
+  /api/chain-capabilities/v1:
+    get:
+      summary: Get chain capabilities
+      description: 'Returns, for every supported chain, which CipherOwl capability tiers are available. The tiers are progressive: `screening` is the baseline address-screening capability; `reporting` means the full Screening, Risk & Reporting (SRR) API stack is available; `research` means the chain is also available in the OwlTrace research experience (graph exploration, transaction explorer, and related investigative tooling).'
+      operationId: RiskReasonService_GetChainCapabilities
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetChainCapabilitiesResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      tags:
+      - SRR API
+      parameters: []
+  /api/report/v1/sar/chains/{chain}/addresses/{address}:
+    get:
+      tags:
+      - SRR API
+      summary: Get SAR report
+      description: Generates a draft Suspicious Activity Report (SAR) narrative for an address, formatting its risk findings into the structure compliance teams need for regulatory filing. Use it as a starting point for a SAR submission rather than writing the narrative from scratch.
+      operationId: sar_report_api
+      parameters:
+      - name: chain
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'
+          title: Chain
+          example: bitcoin
+        description: Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'
+      - name: address
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Blockchain address to analyze
+          title: Address
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+        description: Blockchain address to analyze
+      - name: config
+        in: query
+        required: false
+        schema:
+          description: Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list.
+          title: Config
+          type: string
+          nullable: true
+        description: Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceReport'
+        '400':
+          description: Bad Request
+        '403':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /api/screen/v1/chains/{chain}/batch:
+    post:
+      summary: Batch screen
+      description: Screens many addresses in a single request against one risk configuration, returning an independent risk verdict for each address. Use it for bulk or periodic re-screening of large address lists (for example, a customer wallet base or a watchlist) where per-address round trips would be too slow.
+      operationId: ScreenService_BatchScreenAddresses
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1BatchScreenAddressesResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: chain
+        description: The blockchain network where the addresses exist
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bitcoin
+      tags:
+      - SRR API
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScreenServiceBatchScreenAddressesBody'
+  /api/screen/v1/chains/{chain}/addresses/{address}:
+    get:
+      summary: Screen address
+      description: Screens a single blockchain address against a risk configuration and returns a fast yes/no risk verdict (`found_risk`). This is the lowest-latency SRR endpoint, intended for real-time compliance checks such as gating a deposit, withdrawal, or counterparty before a transaction is allowed.
+      operationId: ScreenService_ScreenAddress
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ScreenAddressResponse'
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+      parameters:
+      - name: chain
+        in: path
+        required: true
+        schema:
+          type: string
+          example: bitcoin
+      - name: address
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 17mhyeBX617ABZ1ffThhUTJkHUcMvCkfd5
+      - name: config
+        description: 'Selects the risk configuration (preconfigured risk model — categories,
+
+          hop depths, thresholds) to apply for this address. Accepted values are
+
+          moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix
+
+          with `co-` to reference a CipherOwl-managed configuration. An
+
+          unprefixed name resolves against your organization''s customized
+
+          configurations. When omitted or empty, the server resolves
+
+          your organization''s default configuration for the requested chain and
+
+          returns the resolved name on the response. See
+
+          https://readme.cipherowl.ai/reference/parameters for the current list.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: namespace
+        description: 'Optional namespace for request attribution and reporting purposes.
+
+          Format: dot-separated lowercase alphanumeric segments (e.g., "client.team", "binance.security")
+
+          Max length: 256 characters. Does not affect screening logic.
+
+          Use cases: sub-organization tracking, billing attribution, audit trails.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hops
+        description: 'Hop distance for multihop bloomfilter queries (0-8).
+
+          When set, uses multihop bloomfilter and checks all hops from 0 to this value.
+
+          When not set, uses legacy single-hop bloomfilter behavior.'
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: trackAlert
+        description: 'Explicitly opt this request into Simple Case tracking. Default/omitted is false.
+
+          Event publication still requires global producer enablement, org-config
+
+          allow_simple_case=true, and a risk_found=true result.
+
+          Field is named track_alert for wire-compatibility; it means
+
+          "create a Simple Case from this screening if it triggers."'
+        in: query
+        required: false
+        schema:
+          type: boolean
+      tags:
+      - SRR API
+components:
+  schemas:
+    v1ChainCapability:
+      type: object
+      properties:
+        chainClass:
+          type: string
+          description: The blockchain family this chain belongs to (e.g., evm, bitcoin, tron).
+        screening:
+          type: boolean
+          description: 'True if the Screening API supports this chain (single-address and batch
+
+            address screening).'
+        reporting:
+          type: boolean
+          description: 'True if the full SRR (Screening, Risk & Reporting) API stack supports
+
+            this chain.'
+        research:
+          type: boolean
+          description: 'True if the chain is available in the OwlTrace research UI — the most
+
+            advanced tier, covering graph exploration, the transaction explorer,
+
+            and related investigative tooling.'
+      title: Capability details for a single chain
+    v1GetAddressRiskBreakdownResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: The blockchain network
+        address:
+          type: string
+          title: The blockchain address
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied.
+
+            May differ from the requested value when the request omitted `config`
+
+            and the server resolved the organization''s default.'
+        risks:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1RiskBreakdown'
+          title: List of risk breakdowns
+      title: Response message for GetAddressRiskBreakdown
+    apirisk_reasonv1Path:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+          title: List of addresses in the path
+      title: Transaction path representation
+    v1GetChainCapabilitiesResponse:
+      type: object
+      properties:
+        capabilities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v1ChainCapability'
+          title: Chain capabilities mapping chain key to its capabilities
+      title: Response message for GetChainCapabilities
+    EvidenceReport:
+      properties:
+        risk_level:
+          $ref: '#/components/schemas/RiskLevel'
+          description: 'DEPRECATED: Use found_risk instead. This field will be removed in a future version.'
+          deprecated: true
+        found_risk:
+          type: boolean
+          title: Found Risk
+          description: Boolean indicating whether risk was found for the address
+        report:
+          title: Report
+          type: string
+          nullable: true
+        error:
+          title: Error
+          type: string
+          nullable: true
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      required:
+      - risk_level
+      - found_risk
+      - timestamp
+      title: EvidenceReport
+    v1BatchScreenAddressesResponse:
+      type: object
+      properties:
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied to
+
+            every address in this batch. May differ from the requested value when
+
+            the request omitted `config` and the server resolved the
+
+            organization''s default.'
+        chain:
+          type: string
+          title: The blockchain network where the addresses exist
+        results:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1AddressResult'
+          title: The screening results for each address
+        version:
+          type: string
+          title: The version of the screening bloom filter used
+        explanations:
+          type: object
+          additionalProperties:
+            type: string
+          title: LLM explanations dictionary
+    v1RiskType:
+      type: string
+      enum:
+      - RISK_TYPE_UNSPECIFIED
+      - DIRECT
+      - INDIRECT
+      default: RISK_TYPE_UNSPECIFIED
+      description: "- RISK_TYPE_UNSPECIFIED: Default value for unspecified risk type\n - DIRECT: Direct exposure to risky entity\n - INDIRECT: Indirect exposure to risky entity (through intermediaries)"
+      title: RiskType represents the type of risk exposure
+    v1ChainAddress:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: The chain name (e.g., evm, bitcoin, solana, tron)
+        address:
+          type: string
+          title: The address on that chain
+      title: Chain-address pair for cross-chain path representation
+    ScreenServiceBatchScreenAddressesBody:
+      type: object
+      properties:
+        config:
+          type: string
+          description: 'Selects the risk configuration (preconfigured risk model — categories,
+
+            hop depths, thresholds) to apply for every address in this batch.
+
+            Accepted values are moniker names such as `co-defi`, `co-vasp`,
+
+            `co-institution`. Prefix with `co-` to reference a CipherOwl-managed
+
+            configuration. An unprefixed name resolves against your organization''s
+
+            customized configurations. When omitted or empty, the server resolves
+
+            your organization''s default configuration for the requested chain and
+
+            returns the resolved name on the response. See
+
+            https://readme.cipherowl.ai/reference/parameters for the current list.'
+        addresses:
+          type: array
+          items:
+            type: string
+          title: The blockchain addresses to screen
+        namespace:
+          type: string
+          description: Optional namespace for request attribution and reporting purposes.
+        hops:
+          type: integer
+          format: int32
+          description: 'Hop distance for multihop bloomfilter queries (0-8).
+
+            When set, uses multihop bloomfilter and checks all hops from 0 to this value.
+
+            When not set, uses legacy single-hop bloomfilter behavior.'
+        trackAlert:
+          type: boolean
+          description: Explicitly opt this request into alert tracking. Default/omitted is false.
+    v1GetAddressRiskScoreResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: The blockchain network
+        address:
+          type: string
+          title: The blockchain address
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied.
+
+            May differ from the requested value when the request omitted `config`
+
+            and the server resolved the organization''s default.'
+        riskProfile:
+          type: string
+          title: The risk profile used for scoring
+        riskScore:
+          type: number
+          format: double
+          title: Computed risk score (0-100, hard-capped)
+        riskBand:
+          type: string
+          title: 'Risk band classification: "Low Risk", "Medium Risk", "High Risk", or "Severe Risk"'
+        breakdown:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1RiskScoreItem'
+          title: Detailed breakdown of risk contributions
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp of the computation
+      title: Response message for GetAddressRiskScore
+    RiskLevel:
+      type: string
+      enum:
+      - high
+      - medium
+      - low
+      - nondeterministic
+      title: RiskLevel
+      description: 'DEPRECATED: Risk level classification. Use found_risk boolean instead.'
+    v1RiskBreakdown:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/v1RiskType'
+          title: Risk type
+        category:
+          type: string
+          title: Risk category (e.g., sanctions, scam, darknet)
+        direction:
+          $ref: '#/components/schemas/v1TransactionDirection'
+          title: Transaction direction - only populated for INDIRECT risk type
+        percentage:
+          type: number
+          format: double
+          description: 'Total percentage of exposure to this risk category compared to the address''s total transactions value.
+
+            Range is 0 - 100.'
+        hops:
+          type: integer
+          format: int32
+          title: Number of hops to the risk entity - only for INDIRECT
+        totalUsdValue:
+          type: number
+          format: double
+          title: Total USD value of exposure to this risk category - only for INDIRECT
+      title: Risk breakdown detail
+    v1ScreenAddressResponse:
+      type: object
+      properties:
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied.
+
+            May differ from the requested value when the request omitted `config`
+
+            and the server resolved the organization''s default.'
+        chain:
+          type: string
+          title: The blockchain network where the address exists
+        address:
+          type: string
+          title: The blockchain address that was screened
+        foundRisk:
+          type: boolean
+          title: Whether the address has a risk signal
+        version:
+          type: string
+          title: The version of the screening bloom filter used
+        explanations:
+          type: object
+          additionalProperties:
+            type: string
+          title: LLM explanations dictionary
+    v1GetAddressRiskReasonDetailResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: The blockchain network
+        address:
+          type: string
+          title: The blockchain address
+        config:
+          type: string
+          description: Canonical name of the risk configuration that was actually applied.
+        foundRisk:
+          type: boolean
+          title: Indicates if any risk was found
+        riskLevel:
+          type: string
+          title: Deprecated, use found_risk instead
+        reasons:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1AddressRiskReasonDetailItem'
+          title: List of detailed risk reasons of this address
+      title: Response message for GetAddressRiskReasonDetail
+    v1PathWithChain:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1ChainAddress'
+          title: List of chain-address pairs in the path
+      title: Path with chain information for cross-chain transactions
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    v1AddressResult:
+      type: object
+      properties:
+        address:
+          type: string
+          title: The blockchain address that was screened
+        foundRisk:
+          type: boolean
+          title: Whether the address has a risk signal
+    v1AddressRiskReasonDetailItem:
+      type: object
+      properties:
+        category:
+          type: string
+          title: Risk category (e.g., sanctions, scam, darknet)
+        direction:
+          $ref: '#/components/schemas/v1TransactionDirection'
+          title: Transaction direction
+        hops:
+          type: integer
+          format: int32
+          title: Number of hops to the risky entities in this risk category
+        totalUsdValue:
+          type: number
+          format: double
+          title: Total USD value of exposure to this risk category
+        totalPercentage:
+          type: number
+          format: double
+          description: 'Total percentage of exposure to this risk category compared to the address''s total transactions value.
+
+            Range is 0 - 100.'
+        firstExposureTimestamp:
+          type: string
+          format: int64
+          title: Timestamp of the first exposure (Unix timestamp in seconds)
+        lastExposureTimestamp:
+          type: string
+          format: int64
+          title: Timestamp of the last exposure (Unix timestamp in seconds)
+        paths:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/apirisk_reasonv1Path'
+          title: Transaction paths between the address and risky entities in this risk category
+        isPartialSet:
+          type: boolean
+          title: Indicates if the paths is a partial result set
+        label:
+          type: string
+          title: Label for Coinbase M2M API calls (mapped from category or original label)
+        standardLabel:
+          type: string
+          title: Standard label for Coinbase M2M API calls (target label from mapping)
+        pathsWithChain:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1PathWithChain'
+          title: 'Transaction paths with chain information for cross-chain transactions
+
+            Each path contains chain-address pairs showing the chain for each address'
+      title: Detailed risk information for v1 API (full details)
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    v1RiskScoreItem:
+      type: object
+      properties:
+        category:
+          type: string
+          title: Risk category display name (e.g., "Sanctioned by US", "Scam")
+        direction:
+          type: string
+          title: 'Direction of exposure: "DIRECT", "SEND", or "RECEIVE"'
+        hops:
+          type: integer
+          format: int32
+          title: Number of hops to the risk source (0 for direct)
+        usdValue:
+          type: number
+          format: double
+          title: USD value of the exposure
+        riskContribution:
+          type: number
+          format: double
+          title: Contribution of this item to the overall risk score
+      title: Individual risk contribution in the score breakdown
+    v1TransactionDirection:
+      type: string
+      enum:
+      - TRANSACTION_DIRECTION_UNSPECIFIED
+      - SEND
+      - RECEIVE
+      default: TRANSACTION_DIRECTION_UNSPECIFIED
+      description: "- TRANSACTION_DIRECTION_UNSPECIFIED: Default value for unspecified direction\n - SEND: Transaction sent from the address\n - RECEIVE: Transaction received by the address"
+      title: TransactionDirection represents the direction of a transaction flow
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 access token obtained from /oauth/token using client credentials.
