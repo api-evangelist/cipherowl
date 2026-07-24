@@ -1,0 +1,24 @@
+generated: '2026-07-18'
+method: searched
+source: https://readme.cipherowl.ai/reference/release-notes
+versioning:
+  scheme: uri-path
+  note: >-
+    Per-service path versions (screen v1, reason v2, report v1, onchain v1,
+    private-data v1, chain-capabilities v1). Public API release train is tracked
+    separately (current 2.1.0).
+  current_release: 2.1.0
+  docs: https://readme.cipherowl.ai/reference/release-notes
+deprecation:
+  policy: >-
+    Host consolidation: all public endpoints now served from svc.cipherowl.ai
+    (or svc.cipherowl.com). The legacy tools.prod.cipherowl.ai host is deprecated
+    and will be retired after a transition period during which both hosts return
+    identical responses. Legacy pre-SRR APIs are being deprecated as customers are
+    migrated to the SRR suite.
+  deprecated_hosts:
+  - tools.prod.cipherowl.ai
+  sunset_header: false
+  docs: https://readme.cipherowl.ai/reference/release-notes
+status_page: https://status.cipherowl.ai/
+deprecated_operations: []

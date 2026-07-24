@@ -1,8 +1,30 @@
 aid: cipherowl
-name: Cipherowl
-description: Cipherowl is a company surfaced as a portfolio company of general-catalyst and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+name: CipherOwl
+description: >-
+  CipherOwl provides AI-powered security and compliance for institutional
+  stablecoins and digital assets. Its Screening, Risk & Reporting (SRR) API turns a
+  blockchain address into a compliance decision: real-time sanctions and risk
+  screening, deterministic 0-100 risk scoring, categorized risk breakdowns,
+  path-level exposure evidence (including cross-chain), and analyst-ready risk
+  assessment, SAR, and risk-flow-graph reports across Bitcoin, EVM, Tron, Solana,
+  XRP and more. The platform also offers an Onchain balance service and a
+  Private Data override service, an OwlTrace research experience, a Strix AI
+  investigation agent, and a first-party CLI (cipherowl-sr3) that doubles as a
+  Model Context Protocol server. Authentication is OAuth 2.0 client-credentials.
 url: https://raw.githubusercontent.com/api-evangelist/cipherowl/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cipherowl.com/og.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,12 +33,157 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
-- Company
-apis: []
+- Blockchain
+- Compliance
+- Crypto
+- Security
+- Risk
+- Sanctions Screening
+- AML
+- Digital Assets
+- Stablecoins
+- Web3
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: cipherowl:cipherowl-onchain-service-api
+  name: CipherOwl Onchain Service API
+  description: Query blockchain balances and supported chain metadata across multiple networks.
+  humanURL: https://readme.cipherowl.ai/reference/introduction
+  baseURL: https://svc.cipherowl.ai
+  tags:
+  - Onchain Service
+  properties:
+  - type: OpenAPI
+    url: openapi/cipherowl-onchain-service-api-openapi.yml
+  - type: Authentication
+    url: authentication/cipherowl-authentication.yml
+  - type: ErrorCatalog
+    url: errors/cipherowl-problem-types.yml
+  - type: DataModel
+    url: data-model/cipherowl-data-model.yml
+  - type: Sandbox
+    url: sandbox/cipherowl-sandbox.yml
+  - type: Conventions
+    url: conventions/cipherowl-conventions.yml
+  - type: Arazzo
+    url: arazzo/cipherowl-srr-investigation.yml
+- aid: cipherowl:cipherowl-private-data-api-api
+  name: CipherOwl Private Data API API
+  description: >-
+    Manage organization-scoped screening overrides (allowlists and denylists) for blockchain addresses.
+  humanURL: https://readme.cipherowl.ai/reference/introduction
+  baseURL: https://svc.cipherowl.ai
+  tags:
+  - Private Data API
+  properties:
+  - type: OpenAPI
+    url: openapi/cipherowl-private-data-api-api-openapi.yml
+  - type: Authentication
+    url: authentication/cipherowl-authentication.yml
+  - type: ErrorCatalog
+    url: errors/cipherowl-problem-types.yml
+  - type: DataModel
+    url: data-model/cipherowl-data-model.yml
+  - type: Sandbox
+    url: sandbox/cipherowl-sandbox.yml
+  - type: Conventions
+    url: conventions/cipherowl-conventions.yml
+  - type: Arazzo
+    url: arazzo/cipherowl-srr-investigation.yml
+- aid: cipherowl:cipherowl-srr-api-api
+  name: CipherOwl SRR API API
+  description: >-
+    Screen blockchain addresses for risk, retrieve risk reasons, breakdowns, scores, and generate reports.
+  humanURL: https://readme.cipherowl.ai/reference/introduction
+  baseURL: https://svc.cipherowl.ai
+  tags:
+  - SRR API
+  properties:
+  - type: OpenAPI
+    url: openapi/cipherowl-srr-api-api-openapi.yml
+  - type: Authentication
+    url: authentication/cipherowl-authentication.yml
+  - type: ErrorCatalog
+    url: errors/cipherowl-problem-types.yml
+  - type: DataModel
+    url: data-model/cipherowl-data-model.yml
+  - type: Sandbox
+    url: sandbox/cipherowl-sandbox.yml
+  - type: Conventions
+    url: conventions/cipherowl-conventions.yml
+  - type: Arazzo
+    url: arazzo/cipherowl-srr-investigation.yml
+common:
+# --- Developer surface / link properties ---
+- type: DeveloperPortal
+  url: https://readme.cipherowl.ai/
+- type: Documentation
+  url: https://readme.cipherowl.ai/reference/introduction
+- type: APIReference
+  url: https://readme.cipherowl.ai/reference
+- type: GettingStarted
+  url: https://readme.cipherowl.ai/reference/build-a-client
+- type: Support
+  url: https://readme.cipherowl.ai/reference/support
+- type: Blog
+  url: https://cipherowl.com/blog
+- type: GitHubOrganization
+  url: https://github.com/cipherowl-ai
+- type: Pricing
+  url: https://cipherowl.com/pricing
+- type: SignUp
+  url: https://app.cipherowl.ai
+- type: TermsOfService
+  url: https://cipherowl.com/terms
+- type: PrivacyPolicy
+  url: https://cipherowl.com/privacy
+- type: StatusPage
+  url: https://status.cipherowl.ai/
+- type: ChangeLog
+  url: https://readme.cipherowl.ai/reference/release-notes
+# --- Enrichment artifacts + canonical scored pointers ---
+- type: LLMsTxt
+  url: llms/cipherowl-llms.txt
+- type: WellKnown
+  url: well-known/cipherowl-well-known.yml
+- type: SecurityTxt
+  url: well-known/cipherowl-security.txt
+- type: Packages
+  url: packages/cipherowl-packages.yml
+- type: CLI
+  url: cli/cipherowl-cli.yml
+- type: MCPServer
+  url: mcp/cipherowl-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Lifecycle
+  url: lifecycle/cipherowl-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/cipherowl-lifecycle.yml
+- type: Conformance
+  url: conformance/cipherowl-conformance.yml
+- type: Compliance
+  url: https://cipherowl.com/trust
+- type: TrustCenter
+  url: security/cipherowl-trust-center.yml
+- type: Authentication
+  url: authentication/cipherowl-authentication.yml
+- type: DomainSecurity
+  url: security/cipherowl-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/cipherowl-vulnerability-disclosure.yml
+- type: Security
+  url: https://cipherowl.com/trust
+- type: AgenticAccess
+  url: agentic-access/cipherowl-agentic-access.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cipherowl-openapi.json + https://readme.cipherowl.ai/reference/status-codes
+format: grpc-status
+note: >-
+  CipherOwl is a gRPC-gateway API; error responses use the google.rpc.Status
+  envelope (schema rpcStatus: code, message, details[]) rather than RFC 9457
+  application/problem+json. HTTP status semantics are documented on the Status
+  Codes reference page.
+envelope:
+  schema: rpcStatus
+  fields:
+  - code
+  - message
+  - details
+problems:
+- status: 400
+  title: Bad request
+  remediation: Fix the request; refer to the response body (message/details) for the
+    specific validation error.
+- status: 401
+  title: Unauthorized
+  remediation: Bearer token expired or rejected. Request a new OAuth token from
+    /oauth/token and retry the request once.
+- status: 403
+  title: Forbidden
+  remediation: The caller is not authorized for this API, or the path is incorrect
+    (an incorrect API path also returns 403).
+- status: 429
+  title: Too Many Requests
+  remediation: Rate limit exceeded. Back off and retry, honoring the Retry-After
+    header when present; otherwise use exponential backoff.
+- status: 500
+  title: Internal server error
+  remediation: Unexpected server error. Retry with backoff; contact CipherOwl support
+    if it persists.

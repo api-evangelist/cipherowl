@@ -1,0 +1,111 @@
+arazzo: 1.0.1
+info:
+  title: CipherOwl SRR Investigation Funnel
+  version: 1.0.0
+  description: >-
+    Screen a blockchain address, and when it is risky, drill down through score,
+    breakdown, and path-level evidence, then generate an analyst-ready risk
+    assessment. Seeded with co-sandbox test values so a fork runs for free.
+sourceDescriptions:
+- name: cipherowl
+  url: ../openapi/cipherowl-openapi.json
+  type: openapi
+workflows:
+- workflowId: srr-investigation
+  summary: Screen -> score -> breakdown -> detail -> report for one address.
+  description: >-
+    The full Screening, Risk & Reporting funnel from a real-time gate to a
+    shareable assessment. Uses the free co-sandbox config against a curated EVM
+    address.
+  inputs:
+    type: object
+    properties:
+      chain:
+        type: string
+        default: evm
+      address:
+        type: string
+        default: '0x93df2c9c8786242b8fdca3f96b3914b8b4a9f704'
+      config:
+        type: string
+        default: co-sandbox
+  steps:
+  - stepId: capabilities
+    description: Preflight - which chains support which SRR tiers.
+    operationId: RiskReasonService_GetChainCapabilities
+  - stepId: screen
+    description: Fast yes/no risk verdict at the gate.
+    operationId: ScreenService_ScreenAddress
+    parameters:
+    - name: chain
+      in: path
+      value: $inputs.chain
+    - name: address
+      in: path
+      value: $inputs.address
+    - name: config
+      in: query
+      value: $inputs.config
+    outputs:
+      foundRisk: $response.body#/foundRisk
+  - stepId: score
+    description: Deterministic 0-100 risk score and band.
+    operationId: RiskReasonService_GetAddressRiskScore
+    parameters:
+    - name: chain
+      in: path
+      value: $inputs.chain
+    - name: address
+      in: path
+      value: $inputs.address
+    - name: config
+      in: query
+      value: $inputs.config
+    outputs:
+      riskScore: $response.body#/riskScore
+      riskBand: $response.body#/riskBand
+  - stepId: breakdown
+    description: Matched risk categories, direct vs indirect.
+    operationId: RiskReasonService_GetAddressRiskBreakdown2
+    parameters:
+    - name: chain
+      in: path
+      value: $inputs.chain
+    - name: address
+      in: path
+      value: $inputs.address
+    - name: config
+      in: query
+      value: $inputs.config
+  - stepId: detail
+    description: Per-path evidence behind the verdict.
+    operationId: RiskReasonService_GetAddressRiskReasonDetail
+    parameters:
+    - name: chain
+      in: path
+      value: $inputs.chain
+    - name: address
+      in: path
+      value: $inputs.address
+    - name: config
+      in: query
+      value: $inputs.config
+  - stepId: report
+    description: Human-readable risk assessment for the case file.
+    operationId: risk_assessment_api
+    parameters:
+    - name: chain
+      in: path
+      value: $inputs.chain
+    - name: address
+      in: path
+      value: $inputs.address
+    - name: config
+      in: query
+      value: $inputs.config
+    outputs:
+      report: $response.body#/report
+  outputs:
+    riskScore: $steps.score.outputs.riskScore
+    riskBand: $steps.score.outputs.riskBand
+    report: $steps.report.outputs.report

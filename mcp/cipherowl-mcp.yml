@@ -1,0 +1,38 @@
+generated: '2026-07-18'
+method: searched
+status: published
+source: https://github.com/cipherowl-ai/cipherowl-sr3
+server:
+  name: cipherowl-sr3
+  transport: stdio
+  command: cipherowl-sr3 mcp
+  print_config: cipherowl-sr3 mcp --print-config=<host>
+  hosts_supported: [claude-desktop, claude-code, cursor, codex, opencode]
+  auth: OAuth2 client-credentials via `cipherowl-sr3 login` (browser); tokens cached
+    under ~/.cipherowl.
+  note: >-
+    Published, locally-run MCP server shipped inside the first-party CipherOwl SR3
+    CLI. All tools are read-only; output matches the JSON CLI format including
+    request_id. No hosted/remote MCP URL is published.
+tools:
+- name: screen
+  description: Screen a single blockchain address for risk (yes/no verdict).
+  source_operation: openapi/cipherowl-openapi.json#ScreenService_ScreenAddress
+- name: batch_screen
+  description: Screen many addresses in one request against one risk configuration.
+  source_operation: openapi/cipherowl-openapi.json#ScreenService_BatchScreenAddresses
+- name: reason_risk
+  description: Risk score / breakdown for an address.
+  source_operation: openapi/cipherowl-openapi.json#RiskReasonService_GetAddressRiskScore
+- name: reason_exposures
+  description: Detailed risk exposures and evidence for an address.
+  source_operation: openapi/cipherowl-openapi.json#RiskReasonService_GetAddressRiskReasonDetail
+- name: metadata_labels
+  description: Address labels / tags.
+- name: metadata_entities
+  description: Entity metadata for an address.
+- name: capabilities
+  description: Which chains support which SRR capability tiers.
+  source_operation: openapi/cipherowl-openapi.json#RiskReasonService_GetChainCapabilities
+- name: detect
+  description: Detect the chain family for an address (no auth required).

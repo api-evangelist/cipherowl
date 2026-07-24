@@ -1,0 +1,38 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/cipherowl-ai/cipherowl-sr3
+name: cipherowl-sr3
+description: CipherOwl SR3 CLI - blockchain address screening, risk analysis, and
+  compliance tooling. All commands are read-only queries.
+version: 2026.1.0
+install:
+- method: script
+  command: curl -sSL https://raw.githubusercontent.com/cipherowl-ai/cipherowl-sr3/main/scripts/install-sr3.sh | sh
+  note: Installs to ~/.local/bin; macOS (Intel/Apple Silicon) + Linux (amd64/arm64);
+    pin with VERSION=2026.1.0.
+auth:
+  command: cipherowl-sr3 login
+  note: Authenticate via browser (OAuth2 client-credentials); tokens cached under ~/.cipherowl.
+commands:
+- name: login
+  summary: Authenticate via browser.
+- name: doctor
+  summary: Verify connectivity.
+- name: screen <address>
+  summary: Screen an address for risk.
+- name: reason breakdown <addr>
+  summary: Risk breakdown by category.
+- name: metadata labels <addr>
+  summary: Address labels / tags.
+- name: detect <address>
+  summary: Detect chain (no auth required).
+- name: mcp
+  summary: Run as a Model Context Protocol server over stdio (see mcp/cipherowl-mcp.yml).
+- name: update
+  summary: Install latest release (--check to check without installing).
+- name: --agent-info
+  summary: ~630-line machine reference for agents.
+output_flags:
+- '-f table (columnar)'
+- '-q (exit code only)'
+- 'default JSON (includes request_id)'

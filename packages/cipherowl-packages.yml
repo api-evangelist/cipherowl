@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/cipherowl-ai
+note: >-
+  CipherOwl ships a first-party CLI (cipherowl-sr3) and an official Homebrew tap.
+  The API docs provide copy-paste OAuth2 client code in Python, Go, TypeScript and
+  Java (see llms/cipherowl-llms.txt -> Build a CipherOwl Client) but no published,
+  installable client-library package on npm/PyPI/Maven/NuGet/crates was found; the
+  example clients live in the repos below rather than as registry packages.
+packages:
+- language: shell
+  registry: github-release
+  name: cipherowl-sr3
+  url: https://github.com/cipherowl-ai/cipherowl-sr3
+  install: curl -sSL https://raw.githubusercontent.com/cipherowl-ai/cipherowl-sr3/main/scripts/install-sr3.sh | sh
+  version: 2026.1.0
+  official: true
+  kind: cli
+  note: Installs to ~/.local/bin; macOS (Intel/Apple Silicon) + Linux (amd64/arm64);
+    pin with VERSION=2026.1.0. Also runs as an MCP server via `cipherowl-sr3 mcp`.
+- language: ruby
+  registry: homebrew
+  name: cipherowl-ai/homebrew-tap
+  url: https://github.com/cipherowl-ai/homebrew-tap
+  install: brew tap cipherowl-ai/tap
+  official: true
+  kind: homebrew-tap
+  note: Official Homebrew tap for CipherOwl CLI tools and apps.
+example_clients:
+- language: go
+  name: api-auth-examples
+  url: https://github.com/cipherowl-ai/api-auth-examples
+  official: true
+  kind: examples
+  note: CipherOwl API OAuth2 auth examples (not a packaged SDK).
+- language: typescript
+  name: co_examples
+  url: https://github.com/cipherowl-ai/co_examples
+  official: true
+  kind: examples
+  note: Public examples for interacting with the CipherOwl API and systems.

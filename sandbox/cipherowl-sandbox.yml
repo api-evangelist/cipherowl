@@ -1,0 +1,68 @@
+generated: '2026-07-18'
+method: searched
+source: https://readme.cipherowl.ai/reference/sandbox-quickstart
+summary: >-
+  CipherOwl exposes a free sandbox via the co-sandbox risk configuration. Add
+  ?config=co-sandbox to any Screening or Risk Reason request. A curated set of EVM
+  and Tron addresses returns a real risky verdict with real reasons; every other
+  address returns clean (foundRisk: false). Requires a free-tier account and a
+  valid OAuth token. The Report API also honors ?config=co-sandbox but strictly
+  requires the `evm` chain key.
+opt_in:
+  parameter: config
+  value: co-sandbox
+  chains: [evm, tron]
+  base_url: https://svc.cipherowl.ai
+signup: https://app.cipherowl.ai
+test_addresses:
+  evm:
+  - address: '0x93df2c9c8786242b8fdca3f96b3914b8b4a9f704'
+    band: Severe
+    story: Hacker address; also received from OFAC / Japan-sanctioned entities (1 hop).
+  - address: '0xab346efef1ffe377cdad686abeab62e83df1099f'
+    band: Severe
+    story: Hacker address; OFAC / Japan-sanctioned exposure (1 hop).
+  - address: '0xf7b31119c2682c88d88d455dbb9d5932c65cf1be'
+    band: Severe
+    story: Directly flagged - hacker + OFAC + Japan-sanctioned.
+  - address: '0xa0e1c89ef1a489c9c7de96311ed5ce5d32c20e4b'
+    band: Severe
+    story: Directly flagged - hacker + OFAC + Japan-sanctioned.
+  - address: '0x6ac5251e07a9cafccec9af39f08222f52ec8c1bc'
+    band: Severe
+    story: Directly flagged - hacker + OFAC-sanctioned.
+  - address: '0x4f47bc496083c727c5fbe3ce9cdf2b0f6496270c'
+    band: Severe
+    story: Directly flagged - OFAC + Japan-sanctioned.
+  - address: '0x2ad9790b5116ce19b9cc59c7982a64df0fea84bc'
+    band: Severe
+    story: OFAC-sanctioned; also received from a hacker / Japan-sanctioned entity (1 hop).
+  - address: '0x511b9ed0b7ef9dfad519f398fdfbdf6af8356780'
+    band: Severe
+    story: Directly flagged - hacker + OFAC-sanctioned.
+  tron:
+  - address: TEAqwfMhXLaomXhZ8KeMhx3njGmQEDnsUR
+    band: Severe
+    story: Directly flagged - OFAC-sanctioned.
+  - address: THrqsvhL6hgMGcsNQibXUCAVXeExy3c1ip
+    band: Severe
+    story: Directly flagged - hacker + OFAC-sanctioned.
+  - address: TV5Wn9L9T7CwrAZhrxyEGunkvQiSnsGy2H
+    band: Severe
+    story: Directly flagged - hacker + OFAC-sanctioned.
+  - address: TCwrBc8fBnLTAQQENwkTLP4UEESM9Ksg6n
+    band: Severe
+    story: Directly flagged - hacker + OFAC-sanctioned.
+  - address: TCSrVLXVvMtaFpE3xjUHveU4P6APan8uBy
+    band: High
+    story: Sent funds to an OFAC-sanctioned address (1 hop).
+clean_example:
+  address: '0x0000000000000000000000000000000000000001'
+  note: Any non-catalog address returns foundRisk false under co-sandbox.
+canonical_configs:
+- name: co-defi
+  note: DeFi-focused profile. Severe risk categories, short-hop tracing.
+- name: co-vasp
+  note: VASP compliance profile. All risk categories.
+- name: co-institution
+  note: Broad institutional profile. All risk categories, deep hop tracing.

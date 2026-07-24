@@ -1,0 +1,18 @@
+{
+  "provider": "cipherowl",
+  "sources": [
+    "cipherowl-onchain-service-api-openapi.yml",
+    "cipherowl-private-data-api-api-openapi.yml",
+    "cipherowl-srr-api-api-openapi.yml"
+  ],
+  "outputs": [
+    "cipherowl-onchain-service-api-openapi.yml",
+    "cipherowl-private-data-api-api-openapi.yml",
+    "cipherowl-srr-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

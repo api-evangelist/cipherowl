@@ -1,0 +1,46 @@
+generated: '2026-07-18'
+method: searched
+source: https://readme.cipherowl.ai/reference/build-a-client
+authentication:
+  style: OAuth 2.0 client-credentials -> Bearer JWT
+  token_endpoint: https://svc.cipherowl.ai/oauth/token
+  request: 'POST JSON {client_id, client_secret, audience: svc.cipherowl.ai, grant_type: client_credentials}'
+  token_ttl_seconds: 86400
+  refresh: Cache the token and its expires_in; refresh ~60s early; on 401 discard and
+    fetch a new token, then retry once.
+  ref: authentication/cipherowl-authentication.yml
+required_headers:
+- 'Authorization: Bearer <token>'
+- 'Accept: application/json'
+rate_limiting:
+  signal: HTTP 429 Too Many Requests
+  retry: Honor Retry-After (seconds) when present; otherwise exponential backoff.
+  note: All OAuth tokens are rate-limited; the shared gateway rate-limits bursts.
+idempotency:
+  supported: false
+  note: No idempotency-key header/parameter is documented. GET reads are naturally
+    safe; PrivateDataService_UpsertEntry (POST) is an upsert (repeatable by key).
+pagination:
+  style: page-token
+  response_field: nextPageToken
+  note: PrivateDataService_ListEntriesForChain returns a nextPageToken for
+    continuation; batch endpoints cap at 100 addresses per request.
+versioning:
+  style: per-service URI-path versions (screen/v1, reason/v2, report/v1, onchain/v1,
+    private-data/v1, chain-capabilities/v1); release train 2.1.0.
+  ref: lifecycle/cipherowl-lifecycle.yml
+config_parameter:
+  name: config
+  note: Selects a preconfigured risk model (co-defi / co-vasp / co-institution /
+    co-sandbox). When omitted, the server resolves the org default and returns the
+    resolved name (config field on screen/reason responses; cipherowl-resolved-config
+    response header on report endpoints).
+chain_parameter:
+  name: chain
+  note: Chain family key (evm, tron, bitcoin, solana, ...). EVM network names like
+    `ethereum` resolve to `evm` on screen/reason; the Report API strictly requires `evm`.
+error_envelope:
+  format: google.rpc.Status (rpcStatus) - code, message, details[]
+  ref: errors/cipherowl-problem-types.yml
+request_tracing:
+  request_id: Present in CLI/MCP JSON output (request_id); returned to correlate calls.

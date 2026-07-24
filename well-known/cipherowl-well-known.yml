@@ -1,0 +1,33 @@
+generated: '2026-07-18'
+method: searched
+source: live probes of CipherOwl hosts
+hosts:
+- host: https://cipherowl.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: cipherowl-security.txt
+    note: RFC 9116; canonical at cipherowl.com, mirrored at cipherowl.ai
+- host: https://cipherowl.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: cipherowl-security.txt
+- host: https://svc.cipherowl.ai
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  note: The svc gateway rejects unauthenticated .well-known requests (403); the OAuth
+    token endpoint is https://svc.cipherowl.ai/oauth/token (client-credentials).
+- host: https://readme.cipherowl.ai
+  documents:
+  - path: /llms.txt
+    status: 200
+    file: ../llms/cipherowl-llms.txt
+    note: llms.txt index of docs pages + per-endpoint OpenAPI
+  - path: /.well-known/security.txt
+    status: 404

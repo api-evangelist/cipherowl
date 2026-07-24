@@ -1,0 +1,9 @@
+generated: '2026-07-18'
+method: derived
+source: arazzo/*.yml
+workflows:
+- file: cipherowl-srr-investigation.yml
+  workflowId: srr-investigation
+  title: CipherOwl SRR Investigation Funnel
+  summary: Screen an address, then score, breakdown, detail, and generate a risk
+    assessment - seeded with co-sandbox test values.

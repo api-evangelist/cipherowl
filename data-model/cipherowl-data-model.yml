@@ -1,0 +1,83 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/cipherowl-openapi.json
+note: >-
+  Derived from OpenAPI component schemas. CipherOwl's domain is address-centric:
+  a blockchain Address on a Chain is screened under a risk Config, producing risk
+  verdicts, scores, breakdowns, detailed reasons and reports; on-chain balances and
+  private-data override entries hang off the same (chain, address) key.
+entities:
+- name: Chain
+  key: [chain]
+  schemas: [v1ChainInfo, v1ChainCapability, v1ChainAddress]
+  fields: [chain, name, symbol, supportsTokens, chainClass, screening, reporting, research]
+- name: Address
+  key: [chain, address]
+  schemas: [v1ChainAddress, v1AddressResult, v1ScreenAddressResponse]
+  fields: [chain, address, foundRisk]
+- name: RiskConfig
+  key: [config]
+  values: [co-defi, co-vasp, co-institution, co-sandbox]
+- name: RiskScore
+  schemas: [v1GetAddressRiskScoreResponse, v1RiskScoreItem]
+  fields: [riskScore, riskBand, riskProfile, breakdown]
+- name: RiskBreakdown
+  schemas: [v1GetAddressRiskBreakdownResponse, v1RiskBreakdown]
+  fields: [category, direction, percentage, hops, totalUsdValue]
+- name: RiskReasonDetail
+  schemas: [v1GetAddressRiskReasonDetailResponse, v1AddressRiskReasonDetailItem, v1PathWithChain]
+  fields: [category, direction, hops, totalUsdValue, paths, pathsWithChain, firstExposureTimestamp, lastExposureTimestamp]
+- name: Report
+  schemas: [EvidenceReport, apirisk_reasonv1Path]
+  fields: [risk_level, found_risk, report, timestamp]
+  kinds: [risk-assessment, graph, sar]
+- name: Balance
+  schemas: [v1Balance, v1TokenBalance, v1BatchGetBalanceResponse]
+  fields: [address, balance, unit, tokens, contract, symbol, decimals]
+- name: OverrideEntry
+  key: [chain, address, listType]
+  schemas: [v1OverrideEntry, v1ListEntriesResponse]
+  fields: [orgId, listType, chain, chainFamily, address, addLabels, removeLabels, notes, version, createdAt, updatedAt, createdBy]
+relationships:
+- from: Address
+  to: Chain
+  type: belongs_to
+  via: chain
+- from: RiskScore
+  to: Address
+  type: belongs_to
+  via: address
+- from: RiskBreakdown
+  to: Address
+  type: belongs_to
+  via: address
+- from: RiskReasonDetail
+  to: Address
+  type: belongs_to
+  via: address
+- from: Report
+  to: Address
+  type: belongs_to
+  via: address
+- from: Balance
+  to: Address
+  type: belongs_to
+  via: address
+- from: OverrideEntry
+  to: Address
+  type: belongs_to
+  via: address
+- from: RiskScore
+  to: RiskConfig
+  type: belongs_to
+  via: config
+- from: RiskReasonDetail
+  to: RiskReasonDetail
+  type: has_many
+  via: hops
+  note: Exposure paths connect an address to risky entities across N hops (cross-chain
+    via pathsWithChain).
+pagination:
+  style: page-token
+  response_field: nextPageToken
+  endpoint: PrivateDataService_ListEntriesForChain

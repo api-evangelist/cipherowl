@@ -1,0 +1,5 @@
+Contact: mailto:security@cipherowl.com
+Expires: 2027-06-30T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://cipherowl.com/.well-known/security.txt
+Policy: https://cipherowl.com/trust

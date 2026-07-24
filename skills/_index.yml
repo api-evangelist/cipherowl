@@ -1,0 +1,20 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/cipherowl-openapi.json
+skills:
+- file: cipherowl-authenticate.md
+  name: Authenticate to the CipherOwl API
+  api: openapi/cipherowl-openapi.json
+  operations: [ScreenService_ScreenAddress]
+- file: cipherowl-screen-address.md
+  name: Screen a blockchain address at the gate
+  api: openapi/cipherowl-openapi.json
+  operations: [ScreenService_ScreenAddress, ScreenService_BatchScreenAddresses, RiskReasonService_GetChainCapabilities]
+- file: cipherowl-investigate-and-report.md
+  name: Investigate a risky address and generate a report
+  api: openapi/cipherowl-openapi.json
+  operations: [RiskReasonService_GetAddressRiskScore, RiskReasonService_GetAddressRiskBreakdown2, RiskReasonService_GetAddressRiskReasonDetail, risk_assessment_api, graph_api, sar_report_api]
+- file: cipherowl-manage-overrides.md
+  name: Manage private-data address overrides
+  api: openapi/cipherowl-openapi.json
+  operations: [PrivateDataService_ListEntriesForChain, PrivateDataService_UpsertEntry, PrivateDataService_GetEntry, PrivateDataService_DeleteEntry]

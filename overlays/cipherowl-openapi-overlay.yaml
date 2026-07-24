@@ -1,0 +1,36 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for CipherOwl SRR API
+  version: 1.0.0
+extends: openapi/cipherowl-openapi.json
+x-provenance:
+  generated: '2026-07-18'
+  method: generated
+  source: openapi/cipherowl-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 4
+    x-apievangelist-notes: >-
+      Spec reconstructed from the per-endpoint OpenAPI blocks embedded in
+      readme.cipherowl.ai (README-hosted docs); merged provider-wide by the
+      enrichment pipeline. Auth is OAuth2 client-credentials -> Bearer JWT.
+- target: $.servers
+  update:
+  - url: https://svc.cipherowl.ai
+    description: Unified production host (v2.1.0). Legacy tools.prod.cipherowl.ai is
+      deprecated.
+  - url: https://svc.cipherowl.com
+    description: Alternate production host.
+- target: $.components.securitySchemes.BearerAuth
+  update:
+    x-token-endpoint: https://svc.cipherowl.ai/oauth/token
+    x-grant-type: client_credentials
+    x-token-ttl-seconds: 86400
+- target: $.info
+  update:
+    x-agent-guidance: >-
+      Use ?config=co-sandbox against the curated sandbox addresses to run the
+      full screen -> score -> breakdown -> detail -> report funnel for free.
+      Cache the OAuth token (expires_in), refresh on 401, back off on 429 honoring
+      Retry-After. See conventions/cipherowl-conventions.yml.

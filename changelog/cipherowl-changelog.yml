@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: https://readme.cipherowl.ai/reference/release-notes
+scheme: semver
+current_version: 2.1.0
+entries:
+- version: 2.1.0
+  breaking: false
+  highlights:
+  - Unified API endpoint - all public endpoints now served from svc.cipherowl.ai
+    (or svc.cipherowl.com); request paths and payloads unchanged.
+  deprecations:
+  - Legacy tools.prod.cipherowl.ai host deprecated; will retire after a transition
+    period (both hosts return identical responses during transition).
+- version: 2.0.0
+  breaking: true
+  highlights:
+  - Introduced the SRR (Screen, Reason, Report) API suite - Risk Screening API,
+    Risk Reasoning API, and Risk Report API.
+  migration:
+  - CipherOwl assists existing customers migrating from legacy APIs to the SRR suite;
+    legacy APIs deprecated after migration.
+- version: 1.1.0
+  breaking: false
+  highlights:
+  - Sanctions API for checking sanctioned addresses across multiple jurisdictions.
+  - Risk Score API with directional scoring.
+  - Batch operations (up to 50 addresses per request).
+  security:
+  - OAuth 2.0 authentication required for all API requests (client_id/client_secret
+    -> access_token); 429 on rate-limit exceeded.
