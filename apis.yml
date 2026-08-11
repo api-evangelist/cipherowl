@@ -120,6 +120,8 @@ apis:
   - type: Arazzo
     url: arazzo/cipherowl-srr-investigation.yml
 common:
+- type: Overlay
+  url: overlays/cipherowl-openapi-overlay.yaml
 # --- Developer surface / link properties ---
 - type: DeveloperPortal
   url: https://readme.cipherowl.ai/
