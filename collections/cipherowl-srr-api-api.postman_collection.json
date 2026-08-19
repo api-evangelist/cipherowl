@@ -1,0 +1,2308 @@
+{
+  "item": [
+    {
+      "id": "90c67ab1-3ede-444c-850b-f85abfe4adb7",
+      "name": "SRR API",
+      "description": {
+        "content": "Screen blockchain addresses for risk, retrieve risk reasons, breakdowns, scores, and generate reports.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "75e03324-baba-47b0-936a-61e524ac323d",
+          "name": "Get risk flow graph",
+          "request": {
+            "name": "Get risk flow graph",
+            "description": {
+              "content": "Returns a risk-flow diagram for an address that visualizes how funds move between it and the risky entities it is exposed to. The diagram is available as Mermaid markup, an interactive HTML wrapper, or a rendered PNG image, making it suitable for embedding in reports or investigation UIs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "report",
+                "v1",
+                "graph",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list."
+                },
+                {
+                  "disabled": false,
+                  "key": "output_format",
+                  "value": "mermaid",
+                  "description": "Output format: 'mermaid' for diagram only, 'html' for interactive wrapper, 'png' for rendered image"
+                },
+                {
+                  "disabled": false,
+                  "key": "interactive",
+                  "value": "true",
+                  "description": "Include interactive features (tooltips, click-to-copy). Ignored for PNG format."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) Blockchain address to analyze"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9099bfc6-4ba0-44b4-b9c9-e01047dc363c",
+              "name": "Risk flow diagram",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "graph",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "output_format",
+                      "value": "mermaid"
+                    },
+                    {
+                      "key": "interactive",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": \"1953-11-07T13:35:24.149Z\",\n  \"graph\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed312c76-f9b0-4350-a5b4-6f7a476e4c14",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "graph",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "output_format",
+                      "value": "mermaid"
+                    },
+                    {
+                      "key": "interactive",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "67d38fab-7b6c-44d9-9886-0731074be6f2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "graph",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "output_format",
+                      "value": "mermaid"
+                    },
+                    {
+                      "key": "interactive",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cba3ffa7-6e62-4ab8-bd99-123cb25eae6f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "graph",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "output_format",
+                      "value": "mermaid"
+                    },
+                    {
+                      "key": "interactive",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b42ee40-f3ab-4fa4-bcc4-91ed6b9abb57",
+          "name": "Get risk assessment report",
+          "request": {
+            "name": "Get risk assessment report",
+            "description": {
+              "content": "Generates a human-readable risk-assessment report for an address, synthesizing its screening result and risk reasons into an analyst-ready narrative with supporting evidence. Use it to produce compliance documentation without manually assembling the underlying screen, reason, and breakdown data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "report",
+                "v1",
+                "risk-assessment",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) Blockchain network identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) Blockchain address to analyze"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d9c9617-8626-4f60-b890-d5fbc135b591",
+              "name": "Returns detailed risk assessment for blockchain address",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "risk-assessment",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"risk_level\": \"high\",\n  \"found_risk\": true,\n  \"timestamp\": \"1998-08-04T19:40:34.177Z\",\n  \"report\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4507447-efe8-4a28-99dc-48c7f80b1a8b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "risk-assessment",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1e0d142c-54e0-4124-bd82-2682fae6b25d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "risk-assessment",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "71d66ee8-6267-4d32-af9c-9a095cc91ade",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "risk-assessment",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c65d3787-dcb1-48b8-beb5-f784d7d529b6",
+          "name": "Get risk breakdown",
+          "request": {
+            "name": "Get risk breakdown",
+            "description": {
+              "content": "Returns a categorized summary of an address's risk exposures — the set of matched risk categories and whether each exposure is direct or indirect — without the full per-path evidence. It is a lighter-weight view than the detail endpoint, intended for rendering an at-a-glance risk profile or dashboard for an address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "reason",
+                "v2",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address",
+                "risk-breakdown"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+                },
+                {
+                  "disabled": false,
+                  "key": "hops",
+                  "value": "<integer>",
+                  "description": "Optional hop depth limit. Caps the max hops used for filtering risk results.\nMust be between 0 and 8. When omitted, uses the config's default hops."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) The blockchain address to analyze"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9e91be1-17c7-468b-87aa-8b41ff43472e",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "reason",
+                    "v2",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address",
+                    "risk-breakdown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chain\": \"string\",\n  \"address\": \"string\",\n  \"config\": \"string\",\n  \"risks\": [\n    {\n      \"type\": \"RISK_TYPE_UNSPECIFIED\",\n      \"category\": \"string\",\n      \"direction\": \"TRANSACTION_DIRECTION_UNSPECIFIED\",\n      \"percentage\": 4446.994858636684,\n      \"hops\": 3104,\n      \"totalUsdValue\": 5012.583417500783\n    },\n    {\n      \"type\": \"RISK_TYPE_UNSPECIFIED\",\n      \"category\": \"string\",\n      \"direction\": \"TRANSACTION_DIRECTION_UNSPECIFIED\",\n      \"percentage\": 4991.230910452235,\n      \"hops\": 2557,\n      \"totalUsdValue\": 199.15487878738423\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b90732e9-773f-444c-8cdf-ed620d7b0005",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "reason",
+                    "v2",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address",
+                    "risk-breakdown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 7710,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa02a8c3-d464-42ef-aa7e-2f00b774e9f2",
+          "name": "Get risk detail",
+          "request": {
+            "name": "Get risk detail",
+            "description": {
+              "content": "Returns the most detailed risk explanation for an address. For each matched risk category and transaction direction it includes the number of hops to the risky entity, total USD and percentage exposure, first/last exposure timestamps, and the actual transaction paths (including cross-chain paths) connecting the address to risky entities. Use it when you need the full evidence behind a risky verdict — for investigations, case files, or audit trails.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "reason",
+                "v2",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address",
+                "detail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+                },
+                {
+                  "disabled": false,
+                  "key": "hops",
+                  "value": "<integer>",
+                  "description": "Optional hop depth limit. Caps the max hops used for filtering risk results.\nMust be between 0 and 8. When omitted, uses the config's default hops."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) The blockchain address to analyze"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "078ccd94-8af9-4623-a2f7-5b3531adb7b0",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "reason",
+                    "v2",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chain\": \"string\",\n  \"address\": \"string\",\n  \"config\": \"string\",\n  \"foundRisk\": false,\n  \"riskLevel\": \"string\",\n  \"reasons\": [\n    {\n      \"category\": \"string\",\n      \"direction\": \"TRANSACTION_DIRECTION_UNSPECIFIED\",\n      \"hops\": 3273,\n      \"totalUsdValue\": 5526.390912368018,\n      \"totalPercentage\": 68.47490403413036,\n      \"firstExposureTimestamp\": \"string\",\n      \"lastExposureTimestamp\": \"string\",\n      \"paths\": [\n        {\n          \"addresses\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"addresses\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"isPartialSet\": true,\n      \"label\": \"string\",\n      \"standardLabel\": \"string\",\n      \"pathsWithChain\": [\n        {\n          \"addresses\": [\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"addresses\": [\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"category\": \"string\",\n      \"direction\": \"TRANSACTION_DIRECTION_UNSPECIFIED\",\n      \"hops\": 1090,\n      \"totalUsdValue\": 4116.173818257626,\n      \"totalPercentage\": 4715.7166935572595,\n      \"firstExposureTimestamp\": \"string\",\n      \"lastExposureTimestamp\": \"string\",\n      \"paths\": [\n        {\n          \"addresses\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"addresses\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"isPartialSet\": true,\n      \"label\": \"string\",\n      \"standardLabel\": \"string\",\n      \"pathsWithChain\": [\n        {\n          \"addresses\": [\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"addresses\": [\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"chain\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"address\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "288f668d-4463-4772-8138-cfd992ac547a",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "reason",
+                    "v2",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9529,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f673a3ea-6666-4cbb-bda6-99701009373d",
+          "name": "Get risk score",
+          "request": {
+            "name": "Get risk score",
+            "description": {
+              "content": "Computes a deterministic 0–100 risk score for an address from its exposure profile. Use it for risk tiering, threshold-based alerting, and automated decisioning where a single comparable numeric value is more convenient than the categorical reason or breakdown views.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "reason",
+                "v2",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address",
+                "risk-score"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+                },
+                {
+                  "disabled": false,
+                  "key": "riskProfile",
+                  "value": "<string>",
+                  "description": "Risk profile name (e.g., \"sanction_focused\"). Uses default profile if empty."
+                },
+                {
+                  "disabled": false,
+                  "key": "hops",
+                  "value": "<integer>",
+                  "description": "Optional hop depth limit. Caps the max hops used for filtering risk results.\nMust be between 0 and 8. When omitted, uses the config's default hops."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) The blockchain address to analyze"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1b2c9380-8fd8-494c-bb0b-0d6df0ec55bd",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "reason",
+                    "v2",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address",
+                    "risk-score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "riskProfile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chain\": \"string\",\n  \"address\": \"string\",\n  \"config\": \"string\",\n  \"riskProfile\": \"string\",\n  \"riskScore\": 8846.226396003824,\n  \"riskBand\": \"string\",\n  \"breakdown\": [\n    {\n      \"category\": \"string\",\n      \"direction\": \"string\",\n      \"hops\": 3483,\n      \"usdValue\": 2647.032096864761,\n      \"riskContribution\": 5209.099274004262\n    },\n    {\n      \"category\": \"string\",\n      \"direction\": \"string\",\n      \"hops\": 5072,\n      \"usdValue\": 2966.071721735908,\n      \"riskContribution\": 4058.3037259050693\n    }\n  ],\n  \"timestamp\": \"1963-12-21T08:40:33.572Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f7a7090-ccff-4187-b02b-de2ab29b8ef4",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "reason",
+                    "v2",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address",
+                    "risk-score"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "riskProfile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network (e.g., bitcoin, evm, tron)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9529,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92d850cc-a361-4c95-a417-270fe5bb4c95",
+          "name": "Get chain capabilities",
+          "request": {
+            "name": "Get chain capabilities",
+            "description": {
+              "content": "Returns, for every supported chain, which CipherOwl capability tiers are available. The tiers are progressive: `screening` is the baseline address-screening capability; `reporting` means the full Screening, Risk & Reporting (SRR) API stack is available; `research` means the chain is also available in the OwlTrace research experience (graph exploration, transaction explorer, and related investigative tooling).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "chain-capabilities",
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0aad0a69-a1f0-4f9f-835e-0b18f1480965",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "chain-capabilities",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capabilities\": {\n    \"key_0\": {\n      \"chainClass\": \"string\",\n      \"screening\": false,\n      \"reporting\": true,\n      \"research\": true\n    },\n    \"key_1\": {\n      \"chainClass\": \"string\",\n      \"screening\": true,\n      \"reporting\": true,\n      \"research\": false\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c646a1d9-32d2-43ee-916a-d433b68e7fcf",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "chain-capabilities",
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9529,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e18cf983-05b9-4041-83d6-fe2095c3437f",
+          "name": "Get SAR report",
+          "request": {
+            "name": "Get SAR report",
+            "description": {
+              "content": "Generates a draft Suspicious Activity Report (SAR) narrative for an address, formatting its risk findings into the structure compliance teams need for regulatory filing. Use it as a starting point for a SAR submission rather than writing the narrative from scratch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "report",
+                "v1",
+                "sar",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) Blockchain address to analyze"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53c65801-14a5-48bf-aaae-89086279dac6",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "sar",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"risk_level\": \"high\",\n  \"found_risk\": true,\n  \"timestamp\": \"1998-08-04T19:40:34.177Z\",\n  \"report\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d1d0627-c940-4a70-87fa-0415dde807d4",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "sar",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ea7829d-7d51-4a78-a028-654c5c73c880",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "sar",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0bfda410-b2a5-40bc-a437-ee36b304cc84",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "report",
+                    "v1",
+                    "sar",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) Blockchain address to analyze"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5701daff-9319-4428-aebe-eb1f983db55c",
+          "name": "Batch screen",
+          "request": {
+            "name": "Batch screen",
+            "description": {
+              "content": "Screens many addresses in a single request against one risk configuration, returning an independent risk verdict for each address. Use it for bulk or periodic re-screening of large address lists (for example, a customer wallet base or a watchlist) where per-address round trips would be too slow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "screen",
+                "v1",
+                "chains",
+                ":chain",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) The blockchain network where the addresses exist"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"config\": \"<string>\",\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"namespace\": \"<string>\",\n  \"hops\": \"<integer>\",\n  \"trackAlert\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e56f523-e587-4c97-8f3e-554260d3dcf4",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "screen",
+                    "v1",
+                    "chains",
+                    ":chain",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network where the addresses exist"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": \"<string>\",\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"namespace\": \"<string>\",\n  \"hops\": \"<integer>\",\n  \"trackAlert\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"config\": \"string\",\n  \"chain\": \"string\",\n  \"results\": [\n    {\n      \"address\": \"string\",\n      \"foundRisk\": true\n    },\n    {\n      \"address\": \"string\",\n      \"foundRisk\": true\n    }\n  ],\n  \"version\": \"string\",\n  \"explanations\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0b5f474-cfa1-4063-a81f-b025ad583d2d",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "screen",
+                    "v1",
+                    "chains",
+                    ":chain",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) The blockchain network where the addresses exist"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": \"<string>\",\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"namespace\": \"<string>\",\n  \"hops\": \"<integer>\",\n  \"trackAlert\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9529,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "608b8c1a-7c90-41e2-aa8c-ff4e71d2dab6",
+          "name": "Screen address",
+          "request": {
+            "name": "Screen address",
+            "description": {
+              "content": "Screens a single blockchain address against a risk configuration and returns a fast yes/no risk verdict (`found_risk`). This is the lowest-latency SRR endpoint, intended for real-time compliance checks such as gating a deposit, withdrawal, or counterparty before a transaction is allowed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "screen",
+                "v1",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+                },
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "Optional namespace for request attribution and reporting purposes.\nFormat: dot-separated lowercase alphanumeric segments (e.g., \"client.team\", \"binance.security\")\nMax length: 256 characters. Does not affect screening logic.\nUse cases: sub-organization tracking, billing attribution, audit trails."
+                },
+                {
+                  "disabled": false,
+                  "key": "hops",
+                  "value": "<integer>",
+                  "description": "Hop distance for multihop bloomfilter queries (0-8).\nWhen set, uses multihop bloomfilter and checks all hops from 0 to this value.\nWhen not set, uses legacy single-hop bloomfilter behavior."
+                },
+                {
+                  "disabled": false,
+                  "key": "trackAlert",
+                  "value": "<boolean>",
+                  "description": "Explicitly opt this request into Simple Case tracking. Default/omitted is false.\nEvent publication still requires global producer enablement, org-config\nallow_simple_case=true, and a risk_found=true result.\nField is named track_alert for wire-compatibility; it means\n\"create a Simple Case from this screening if it triggers.\""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "796c85f6-cc6d-4f42-afd3-77332bf82bce",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "screen",
+                    "v1",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trackAlert",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"config\": \"string\",\n  \"chain\": \"string\",\n  \"address\": \"string\",\n  \"foundRisk\": true,\n  \"version\": \"string\",\n  \"explanations\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b371657-1a80-4243-821e-9ab4384c51bc",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "screen",
+                    "v1",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hops",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trackAlert",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9529,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://svc.cipherowl.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1475af8e-ef2e-4e41-81e8-01aa5fda993e",
+    "name": "CipherOwl Onchain Service SRR API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "CipherOwl Onchain Service Private Data API API",
+    "version": "2.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Private Data API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get override",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/private-data/v1/overrides/chains/:chain/addresses/:address",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get override"
+        },
+        {
+          "info": {
+            "name": "Delete override",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://svc.cipherowl.ai/api/private-data/v1/overrides/chains/:chain/addresses/:address",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete override"
+        },
+        {
+          "info": {
+            "name": "List overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/private-data/v1/overrides/chains/:chain/addresses",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "listType",
+                "value": "",
+                "type": "query",
+                "description": "Optional: filter by list type (if unspecified, returns all types)"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sinceTimestamp",
+                "value": "",
+                "type": "query",
+                "description": "Optional: if provided, only return entries modified since this timestamp"
+              }
+            ]
+          },
+          "docs": "List overrides"
+        },
+        {
+          "info": {
+            "name": "Upsert override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://svc.cipherowl.ai/api/private-data/v1/overrides/chains/:chain/addresses",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert override"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

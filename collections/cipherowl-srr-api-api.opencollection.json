@@ -1,0 +1,327 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "CipherOwl Onchain Service SRR API API",
+    "version": "2.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SRR API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get risk flow graph",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/report/v1/graph/chains/:chain/addresses/:address",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "Blockchain address to analyze"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list."
+              },
+              {
+                "name": "output_format",
+                "value": "",
+                "type": "query",
+                "description": "Output format: 'mermaid' for diagram only, 'html' for interactive wrapper, 'png' for rendered image"
+              },
+              {
+                "name": "interactive",
+                "value": "",
+                "type": "query",
+                "description": "Include interactive features (tooltips, click-to-copy). Ignored for PNG format."
+              }
+            ]
+          },
+          "docs": "Returns a risk-flow diagram for an address that visualizes how funds move between it and the risky entities it is exposed to. The diagram is available as Mermaid markup, an interactive HTML wrapper, or a rendered PNG image, making it suitable for embedding in reports or investigation UIs."
+        },
+        {
+          "info": {
+            "name": "Get risk assessment report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/report/v1/risk-assessment/chains/:chain/addresses/:address",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "Blockchain network identifier"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "Blockchain address to analyze"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list."
+              }
+            ]
+          },
+          "docs": "Generates a human-readable risk-assessment report for an address, synthesizing its screening result and risk reasons into an analyst-ready narrative with supporting evidence. Use it to produce compliance documentation without manually assembling the underlying screen, reason, and breakdown data."
+        },
+        {
+          "info": {
+            "name": "Get risk breakdown",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/reason/v2/chains/:chain/addresses/:address/risk-breakdown",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "The blockchain network (e.g., bitcoin, evm, tron)"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "The blockchain address to analyze"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+              },
+              {
+                "name": "hops",
+                "value": "",
+                "type": "query",
+                "description": "Optional hop depth limit. Caps the max hops used for filtering risk results.\nMust be between 0 and 8. When omitted, uses the config's default hops."
+              }
+            ]
+          },
+          "docs": "Returns a categorized summary of an address's risk exposures — the set of matched risk categories and whether each exposure is direct or indirect — without the full per-path evidence. It is a lighter-weight view than the detail endpoint, intended for rendering an at-a-glance risk profile or dashboard for an address."
+        },
+        {
+          "info": {
+            "name": "Get risk detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/reason/v2/chains/:chain/addresses/:address/detail",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "The blockchain network (e.g., bitcoin, evm, tron)"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "The blockchain address to analyze"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+              },
+              {
+                "name": "hops",
+                "value": "",
+                "type": "query",
+                "description": "Optional hop depth limit. Caps the max hops used for filtering risk results.\nMust be between 0 and 8. When omitted, uses the config's default hops."
+              }
+            ]
+          },
+          "docs": "Returns the most detailed risk explanation for an address. For each matched risk category and transaction direction it includes the number of hops to the risky entity, total USD and percentage exposure, first/last exposure timestamps, and the actual transaction paths (including cross-chain paths) connecting the address to risky entities. Use it when you need the full evidence behind a risky verdict — for investigations, case files, or audit trails."
+        },
+        {
+          "info": {
+            "name": "Get risk score",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/reason/v2/chains/:chain/addresses/:address/risk-score",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "The blockchain network (e.g., bitcoin, evm, tron)"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "The blockchain address to analyze"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+              },
+              {
+                "name": "riskProfile",
+                "value": "",
+                "type": "query",
+                "description": "Risk profile name (e.g., \"sanction_focused\"). Uses default profile if empty."
+              },
+              {
+                "name": "hops",
+                "value": "",
+                "type": "query",
+                "description": "Optional hop depth limit. Caps the max hops used for filtering risk results.\nMust be between 0 and 8. When omitted, uses the config's default hops."
+              }
+            ]
+          },
+          "docs": "Computes a deterministic 0–100 risk score for an address from its exposure profile. Use it for risk tiering, threshold-based alerting, and automated decisioning where a single comparable numeric value is more convenient than the categorical reason or breakdown views."
+        },
+        {
+          "info": {
+            "name": "Get chain capabilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/chain-capabilities/v1"
+          },
+          "docs": "Returns, for every supported chain, which CipherOwl capability tiers are available. The tiers are progressive: `screening` is the baseline address-screening capability; `reporting` means the full Screening, Risk & Reporting (SRR) API stack is available; `research` means the chain is also available in the OwlTrace research experience (graph exploration, transaction explorer, and related investigative tooling)."
+        },
+        {
+          "info": {
+            "name": "Get SAR report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/report/v1/sar/chains/:chain/addresses/:address",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "Blockchain network identifier, e.g. 'evm', 'bitcoin' or 'tron'"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "Blockchain address to analyze"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Selects the risk configuration (preconfigured risk model — categories, hop depths, thresholds) to apply for this address. Accepted values are moniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix with `co-` to reference a CipherOwl-managed configuration. An unprefixed name resolves against your organization's customized configurations. When omitted or empty, the server resolves your organization's default configuration for the requested chain and returns the resolved name on the response. See https://readme.cipherowl.ai/reference/parameters for the current list."
+              }
+            ]
+          },
+          "docs": "Generates a draft Suspicious Activity Report (SAR) narrative for an address, formatting its risk findings into the structure compliance teams need for regulatory filing. Use it as a starting point for a SAR submission rather than writing the narrative from scratch."
+        },
+        {
+          "info": {
+            "name": "Batch screen",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://svc.cipherowl.ai/api/screen/v1/chains/:chain/batch",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "The blockchain network where the addresses exist"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Screens many addresses in a single request against one risk configuration, returning an independent risk verdict for each address. Use it for bulk or periodic re-screening of large address lists (for example, a customer wallet base or a watchlist) where per-address round trips would be too slow."
+        },
+        {
+          "info": {
+            "name": "Screen address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/screen/v1/chains/:chain/addresses/:address",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Selects the risk configuration (preconfigured risk model — categories,\nhop depths, thresholds) to apply for this address. Accepted values are\nmoniker names such as `co-defi`, `co-vasp`, `co-institution`. Prefix\nwith `co-` to reference a CipherOwl-managed configuration. An\nunprefixed name resolves against your organization's customized\nconfigurations. When omitted or empty, the server resolves\nyour organization's default configuration for the requested chain and\nreturns the resolved name on the response. See\nhttps://readme.cipherowl.ai/reference/parameters for the current list."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Optional namespace for request attribution and reporting purposes.\nFormat: dot-separated lowercase alphanumeric segments (e.g., \"client.team\", \"binance.security\")\nMax length: 256 characters. Does not affect screening logic.\nUse cases: sub-organization tracking, billing attribution, audit trails."
+              },
+              {
+                "name": "hops",
+                "value": "",
+                "type": "query",
+                "description": "Hop distance for multihop bloomfilter queries (0-8).\nWhen set, uses multihop bloomfilter and checks all hops from 0 to this value.\nWhen not set, uses legacy single-hop bloomfilter behavior."
+              },
+              {
+                "name": "trackAlert",
+                "value": "",
+                "type": "query",
+                "description": "Explicitly opt this request into Simple Case tracking. Default/omitted is false.\nEvent publication still requires global producer enablement, org-config\nallow_simple_case=true, and a risk_found=true result.\nField is named track_alert for wire-compatibility; it means\n\"create a Simple Case from this screening if it triggers.\""
+              }
+            ]
+          },
+          "docs": "Screens a single blockchain address against a risk configuration and returns a fast yes/no risk verdict (`found_risk`). This is the lowest-latency SRR endpoint, intended for real-time compliance checks such as gating a deposit, withdrawal, or counterparty before a transaction is allowed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

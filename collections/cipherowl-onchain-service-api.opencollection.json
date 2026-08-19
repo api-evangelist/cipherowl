@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "CipherOwl Onchain Service API",
+    "version": "2.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Onchain Service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Batch get balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://svc.cipherowl.ai/api/onchain/v1/chains/:chain/balances:batchget",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "Network identifier - all addresses must be on this chain"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves balance information for up to 100 addresses on the same blockchain in a single efficient request. Partial failures are supported - if some addresses fail, successful results are still returned with error details for failed addresses."
+        },
+        {
+          "info": {
+            "name": "Get balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/onchain/v1/chains/:chain/addresses/:address/balance",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "path",
+                "description": "Network identifier (bitcoin_mainnet, ethereum_mainnet, ethereum_classic_mainnet, xrp_mainnet, solana_mainnet, etc.)"
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "Blockchain address to query (format depends on chain)"
+              }
+            ]
+          },
+          "docs": "Retrieves native currency balance and token holdings for a single blockchain address. Token balances are automatically included for chains that support them (Ethereum, Solana, XRP, Avalanche, etc.)."
+        },
+        {
+          "info": {
+            "name": "List chains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://svc.cipherowl.ai/api/onchain/v1/chains"
+          },
+          "docs": "Returns metadata for all blockchain networks supported by this service, including chain identifiers, names, native units, and token support capabilities."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,828 @@
+{
+  "item": [
+    {
+      "id": "403890c3-9922-47bd-bfe3-65fa845b7e68",
+      "name": "Private Data API",
+      "description": {
+        "content": "Manage organization-scoped screening overrides (allowlists and denylists) for blockchain addresses.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01c65fc1-cf77-48ec-9545-66bda302fca7",
+          "name": "Delete override",
+          "request": {
+            "name": "Delete override",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "private-data",
+                "v1",
+                "overrides",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e62ec7b-9c65-44c7-afa3-f8392cb9c3e4",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d49a398f-8ebd-411b-93ab-99882c43092c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5689,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b1a50681-3ad8-488f-9d0d-2cd9c3ce4b79",
+          "name": "Get override",
+          "request": {
+            "name": "Get override",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "private-data",
+                "v1",
+                "overrides",
+                "chains",
+                ":chain",
+                "addresses",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "48bf50b8-bc81-4da7-a973-e0f5926deb0c",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entry\": {\n    \"orgId\": \"string\",\n    \"listType\": \"LIST_TYPE_UNSPECIFIED\",\n    \"chain\": \"string\",\n    \"chainFamily\": \"string\",\n    \"address\": \"string\",\n    \"addLabels\": [\n      \"string\",\n      \"string\"\n    ],\n    \"removeLabels\": [\n      \"string\",\n      \"string\"\n    ],\n    \"notes\": \"string\",\n    \"createdAt\": \"1960-08-25T21:51:59.944Z\",\n    \"updatedAt\": \"1984-09-14T16:14:32.489Z\",\n    \"createdBy\": \"string\",\n    \"version\": \"string\",\n    \"deletedAt\": \"1984-12-25T04:39:41.216Z\",\n    \"updatedBy\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a817e86e-7be3-4f36-b1eb-f4f06b232160",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2391,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9306341f-e7ae-4a7b-acb3-d01872a2ef62",
+          "name": "List overrides",
+          "request": {
+            "name": "List overrides",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "private-data",
+                "v1",
+                "overrides",
+                "chains",
+                ":chain",
+                "addresses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "listType",
+                  "value": "LIST_TYPE_UNSPECIFIED",
+                  "description": "Optional: filter by list type (if unspecified, returns all types)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDeleted",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sinceTimestamp",
+                  "value": "<dateTime>",
+                  "description": "Optional: if provided, only return entries modified since this timestamp"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9630f2b-47b5-4bc9-87c1-77a68b262183",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "listType",
+                      "value": "LIST_TYPE_UNSPECIFIED"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sinceTimestamp",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"orgId\": \"string\",\n      \"listType\": \"LIST_TYPE_UNSPECIFIED\",\n      \"chain\": \"string\",\n      \"chainFamily\": \"string\",\n      \"address\": \"string\",\n      \"addLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"removeLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"notes\": \"string\",\n      \"createdAt\": \"1973-01-05T01:52:43.872Z\",\n      \"updatedAt\": \"1965-01-10T18:34:54.936Z\",\n      \"createdBy\": \"string\",\n      \"version\": \"string\",\n      \"deletedAt\": \"1977-05-28T02:42:17.041Z\",\n      \"updatedBy\": \"string\"\n    },\n    {\n      \"orgId\": \"string\",\n      \"listType\": \"LIST_TYPE_UNSPECIFIED\",\n      \"chain\": \"string\",\n      \"chainFamily\": \"string\",\n      \"address\": \"string\",\n      \"addLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"removeLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"notes\": \"string\",\n      \"createdAt\": \"1967-04-19T21:52:17.044Z\",\n      \"updatedAt\": \"2004-07-01T02:31:03.536Z\",\n      \"createdBy\": \"string\",\n      \"version\": \"string\",\n      \"deletedAt\": \"1975-08-31T05:00:12.445Z\",\n      \"updatedBy\": \"string\"\n    }\n  ],\n  \"nextPageToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "423c8ba0-0cd4-4cb2-8119-95b81cf0123f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "listType",
+                      "value": "LIST_TYPE_UNSPECIFIED"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sinceTimestamp",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2391,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c4d3e43-760b-4e7f-8a94-45373e3086e9",
+          "name": "Upsert override",
+          "request": {
+            "name": "Upsert override",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "private-data",
+                "v1",
+                "overrides",
+                "chains",
+                ":chain",
+                "addresses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"listType\": \"LIST_TYPE_UNSPECIFIED\",\n  \"address\": \"<string>\",\n  \"addLabels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"removeLabels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"notes\": \"<string>\",\n  \"expectedVersion\": \"<int64>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "65bbb4de-1224-448f-895e-15f60c672039",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"listType\": \"LIST_TYPE_UNSPECIFIED\",\n  \"address\": \"<string>\",\n  \"addLabels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"removeLabels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"notes\": \"<string>\",\n  \"expectedVersion\": \"<int64>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entry\": {\n    \"orgId\": \"string\",\n    \"listType\": \"LIST_TYPE_UNSPECIFIED\",\n    \"chain\": \"string\",\n    \"chainFamily\": \"string\",\n    \"address\": \"string\",\n    \"addLabels\": [\n      \"string\",\n      \"string\"\n    ],\n    \"removeLabels\": [\n      \"string\",\n      \"string\"\n    ],\n    \"notes\": \"string\",\n    \"createdAt\": \"2009-01-29T21:08:50.674Z\",\n    \"updatedAt\": \"1999-04-07T01:19:30.366Z\",\n    \"createdBy\": \"string\",\n    \"version\": \"string\",\n    \"deletedAt\": \"2024-09-24T04:22:23.284Z\",\n    \"updatedBy\": \"string\"\n  },\n  \"created\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c65ec268-a1bd-4aa1-af35-b4df8cb183fa",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "private-data",
+                    "v1",
+                    "overrides",
+                    "chains",
+                    ":chain",
+                    "addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"listType\": \"LIST_TYPE_UNSPECIFIED\",\n  \"address\": \"<string>\",\n  \"addLabels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"removeLabels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"notes\": \"<string>\",\n  \"expectedVersion\": \"<int64>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2391,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://svc.cipherowl.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eca6f829-e3e7-4260-827c-1a78fb8260f1",
+    "name": "CipherOwl Onchain Service Private Data API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).",
+      "type": "text/plain"
+    }
+  }
+}

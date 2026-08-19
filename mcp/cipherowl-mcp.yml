@@ -7,13 +7,16 @@ server:
   transport: stdio
   command: cipherowl-sr3 mcp
   print_config: cipherowl-sr3 mcp --print-config=<host>
-  hosts_supported: [claude-desktop, claude-code, cursor, codex, opencode]
-  auth: OAuth2 client-credentials via `cipherowl-sr3 login` (browser); tokens cached
-    under ~/.cipherowl.
-  note: >-
-    Published, locally-run MCP server shipped inside the first-party CipherOwl SR3
-    CLI. All tools are read-only; output matches the JSON CLI format including
-    request_id. No hosted/remote MCP URL is published.
+  hosts_supported:
+  - claude-desktop
+  - claude-code
+  - cursor
+  - codex
+  - opencode
+  auth: OAuth2 client-credentials via `cipherowl-sr3 login` (browser); tokens cached under ~/.cipherowl.
+  note: Published, locally-run MCP server shipped inside the first-party CipherOwl SR3 CLI. All tools
+    are read-only; output matches the JSON CLI format including request_id. No hosted/remote MCP URL is
+    published.
 tools:
 - name: screen
   description: Screen a single blockchain address for risk (yes/no verdict).
@@ -36,3 +39,9 @@ tools:
   source_operation: openapi/cipherowl-openapi.json#RiskReasonService_GetChainCapabilities
 - name: detect
   description: Detect the chain family for an address (no auth required).
+deployment:
+  mode: local-stdio
+  verified: searched
+  tools: 8
+  checked: '2026-08-12'
+  source: catalog MCP census
