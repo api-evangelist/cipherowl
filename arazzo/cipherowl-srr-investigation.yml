@@ -7,8 +7,8 @@ info:
     breakdown, and path-level evidence, then generate an analyst-ready risk
     assessment. Seeded with co-sandbox test values so a fork runs for free.
 sourceDescriptions:
-- name: cipherowl
-  url: ../openapi/cipherowl-openapi.json
+- name: srrApiApi
+  url: ../openapi/cipherowl-srr-api-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: srr-investigation

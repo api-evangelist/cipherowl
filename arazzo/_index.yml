@@ -1,6 +1,6 @@
-generated: '2026-07-18'
-method: derived
-source: arazzo/*.yml
+x-generated: '2026-07-18'
+x-method: derived
+x-source: arazzo/*.yml
 workflows:
 - file: cipherowl-srr-investigation.yml
   workflowId: srr-investigation
