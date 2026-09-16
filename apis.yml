@@ -131,6 +131,8 @@ apis:
   - type: Arazzo
     url: arazzo/cipherowl-srr-investigation.yml
 common:
+- type: Website
+  url: https://cipherowl.ai
 - type: Overlay
   url: overlays/cipherowl-openapi-overlay.yaml
 - type: DeveloperPortal
