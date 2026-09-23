@@ -1,9 +1,7 @@
 {
   "provider": "cipherowl",
   "sources": [
-    "cipherowl-onchain-service-api-openapi.yml",
-    "cipherowl-private-data-api-api-openapi.yml",
-    "cipherowl-srr-api-api-openapi.yml"
+    "_original/cipherowl-openapi.json"
   ],
   "outputs": [
     "cipherowl-onchain-service-api-openapi.yml",
@@ -13,6 +11,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "cipherowl-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "cipherowl-onchain-service-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cipherowl-private-data-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cipherowl-srr-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

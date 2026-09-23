@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: CipherOwl Onchain Service Private Data API API
+  title: CipherOwl Private Data API
   description: CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).
   version: 2.1.0
 servers:
@@ -210,20 +210,6 @@ components:
         '@type':
           type: string
       additionalProperties: {}
-    v1ListType:
-      type: string
-      enum:
-      - LIST_TYPE_UNSPECIFIED
-      - LIST_TYPE_ALLOWLIST
-      - LIST_TYPE_DENYLIST
-      default: LIST_TYPE_UNSPECIFIED
-      title: ListType enum for override entries
-    v1GetEntryResponse:
-      type: object
-      properties:
-        entry:
-          $ref: '#/components/schemas/v1OverrideEntry'
-      title: Response with a specific entry
     v1UpsertEntryResponse:
       type: object
       properties:
@@ -246,6 +232,18 @@ components:
           items:
             type: object
             $ref: '#/components/schemas/protobufAny'
+    v1DeleteEntryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+      title: Response from delete operation
+    v1GetEntryResponse:
+      type: object
+      properties:
+        entry:
+          $ref: '#/components/schemas/v1OverrideEntry'
+      title: Response with a specific entry
     PrivateDataServiceUpsertEntryBody:
       type: object
       properties:
@@ -279,12 +277,14 @@ components:
         nextPageToken:
           type: string
       title: Response with list of entries
-    v1DeleteEntryResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-      title: Response from delete operation
+    v1ListType:
+      type: string
+      enum:
+      - LIST_TYPE_UNSPECIFIED
+      - LIST_TYPE_ALLOWLIST
+      - LIST_TYPE_DENYLIST
+      default: LIST_TYPE_UNSPECIFIED
+      title: ListType enum for override entries
   securitySchemes:
     BearerAuth:
       type: http

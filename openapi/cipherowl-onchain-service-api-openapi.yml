@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: CipherOwl Onchain Service API
   description: CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).
@@ -109,56 +109,6 @@ components:
         '@type':
           type: string
       additionalProperties: {}
-    OnChainServiceBatchGetBalanceBody:
-      type: object
-      properties:
-        addresses:
-          type: array
-          items:
-            type: string
-          title: List of blockchain addresses to query (1-100 addresses)
-      description: 'Batch request for efficient multi-address queries on a single blockchain.
-
-        All addresses must be on the same network.
-
-
-        **Performance:**
-
-        - Single API call for up to 100 addresses
-
-        - Faster than individual requests
-
-        - Partial failures are handled gracefully'
-      title: Request for retrieving balances of multiple addresses
-    v1BatchGetBalanceResponse:
-      type: object
-      properties:
-        chain:
-          type: string
-          title: Network identifier matching the request
-        balances:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1Balance'
-          title: Balance information for each queried address (same order as request)
-      description: 'Returns balance data for all requested addresses.
-
-        If individual addresses fail, their error field will contain details while other addresses return successfully.'
-      title: Response containing balance information for multiple addresses
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
     onchainv1GetSupportedChainsResponse:
       type: object
       properties:
@@ -172,57 +122,6 @@ components:
 
         and their capabilities before making balance queries.'
       title: Response containing list of supported blockchain chains
-    v1GetBalanceResponse:
-      type: object
-      properties:
-        chain:
-          type: string
-          title: Chain identifier matching the request
-        balance:
-          $ref: '#/components/schemas/v1Balance'
-          title: Balance information including native and token balances
-      description: 'Returns the native currency balance and any token holdings for the requested address.
-
-        For chains that don''t support tokens, the tokens array will be empty.'
-      title: Response containing balance information for a single address
-    v1ChainInfo:
-      type: object
-      properties:
-        chain:
-          type: string
-          title: Unique network identifier for use in balance queries (e.g., "bitcoin_mainnet", "ethereum_mainnet")
-        name:
-          type: string
-          title: Full human-readable chain name for display (e.g., "Bitcoin", "Ethereum", "XRP Ledger")
-        symbol:
-          type: string
-          title: Native unit symbol used in Balance responses (e.g., "satoshi", "wei", "drop", "lamport")
-        supportsTokens:
-          type: boolean
-          title: Whether this chain supports querying token balances (true for Ethereum, Solana, XRP, Avalanche)
-      description: 'Provides essential information about each supported blockchain, including:
-
-        - Unique identifier for use in API requests
-
-        - Human-readable name for display purposes
-
-        - Native unit information for balance interpretation
-
-        - Token support capability
-
-
-        **Chain Identifiers:**
-
-        Currently supported chains include:
-
-        - bitcoin_mainnet, dogecoin_mainnet, litecoin_mainnet, bitcoin_cash_mainnet
-
-        - ethereum_mainnet, ethereum_classic_mainnet, avalanche_mainnet
-
-        - solana_mainnet, xrp_mainnet
-
-        - cardano_mainnet, polkadot_mainnet, stellar_mainnet, hedera_mainnet (coming soon)'
-      title: Metadata about a supported blockchain network
     v1TokenBalance:
       type: object
       properties:
@@ -254,6 +153,69 @@ components:
 
         If balance="1000000" and decimals=6, the human-readable amount is 1.0 tokens'
       title: Information about a token balance held by an address
+    OnChainServiceBatchGetBalanceBody:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+          title: List of blockchain addresses to query (1-100 addresses)
+      description: 'Batch request for efficient multi-address queries on a single blockchain.
+
+        All addresses must be on the same network.
+
+
+        **Performance:**
+
+        - Single API call for up to 100 addresses
+
+        - Faster than individual requests
+
+        - Partial failures are handled gracefully'
+      title: Request for retrieving balances of multiple addresses
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    v1GetBalanceResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Chain identifier matching the request
+        balance:
+          $ref: '#/components/schemas/v1Balance'
+          title: Balance information including native and token balances
+      description: 'Returns the native currency balance and any token holdings for the requested address.
+
+        For chains that don''t support tokens, the tokens array will be empty.'
+      title: Response containing balance information for a single address
+    v1BatchGetBalanceResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Network identifier matching the request
+        balances:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1Balance'
+          title: Balance information for each queried address (same order as request)
+      description: 'Returns balance data for all requested addresses.
+
+        If individual addresses fail, their error field will contain details while other addresses return successfully.'
+      title: Response containing balance information for multiple addresses
     v1Balance:
       type: object
       properties:
@@ -297,6 +259,44 @@ components:
 
         and the balance/tokens fields may be empty or partial.'
       title: Balance information for a blockchain address
+    v1ChainInfo:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Unique network identifier for use in balance queries (e.g., "bitcoin_mainnet", "ethereum_mainnet")
+        name:
+          type: string
+          title: Full human-readable chain name for display (e.g., "Bitcoin", "Ethereum", "XRP Ledger")
+        symbol:
+          type: string
+          title: Native unit symbol used in Balance responses (e.g., "satoshi", "wei", "drop", "lamport")
+        supportsTokens:
+          type: boolean
+          title: Whether this chain supports querying token balances (true for Ethereum, Solana, XRP, Avalanche)
+      description: 'Provides essential information about each supported blockchain, including:
+
+        - Unique identifier for use in API requests
+
+        - Human-readable name for display purposes
+
+        - Native unit information for balance interpretation
+
+        - Token support capability
+
+
+        **Chain Identifiers:**
+
+        Currently supported chains include:
+
+        - bitcoin_mainnet, dogecoin_mainnet, litecoin_mainnet, bitcoin_cash_mainnet
+
+        - ethereum_mainnet, ethereum_classic_mainnet, avalanche_mainnet
+
+        - solana_mainnet, xrp_mainnet
+
+        - cardano_mainnet, polkadot_mainnet, stellar_mainnet, hedera_mainnet (coming soon)'
+      title: Metadata about a supported blockchain network
   securitySchemes:
     BearerAuth:
       type: http
