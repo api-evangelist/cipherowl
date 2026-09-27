@@ -109,6 +109,62 @@ components:
         '@type':
           type: string
       additionalProperties: {}
+    v1GetBalanceResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Chain identifier matching the request
+        balance:
+          $ref: '#/components/schemas/v1Balance'
+          title: Balance information including native and token balances
+      description: 'Returns the native currency balance and any token holdings for the requested address.
+
+        For chains that don''t support tokens, the tokens array will be empty.'
+      title: Response containing balance information for a single address
+    v1Balance:
+      type: object
+      properties:
+        address:
+          type: string
+          title: Blockchain address that was queried
+        balance:
+          type: string
+          title: Native balance in smallest unit (satoshi, wei, lamport, drop) as string
+        unit:
+          type: string
+          title: Unit name of the native balance (e.g., "satoshi", "wei", "lamport", "drop")
+        tokens:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1TokenBalance'
+          title: List of token balances held by this address (empty for non-token chains)
+        error:
+          type: string
+          title: Error message if the address query failed (empty string on success)
+      description: 'Contains the native currency balance and any token holdings.
+
+        Amounts are returned as strings in the smallest unit to preserve precision.
+
+
+        **Native Balance Units:**
+
+        - Bitcoin: satoshi (1 BTC = 100,000,000 satoshi)
+
+        - Ethereum/Ethereum Classic: wei (1 ETH = 1,000,000,000,000,000,000 wei)
+
+        - Solana: lamport (1 SOL = 1,000,000,000 lamport)
+
+        - XRP: drop (1 XRP = 1,000,000 drops)
+
+
+        **Error Handling:**
+
+        If an error occurs (invalid address, network issue, etc.), the error field will contain details
+
+        and the balance/tokens fields may be empty or partial.'
+      title: Balance information for a blockchain address
     onchainv1GetSupportedChainsResponse:
       type: object
       properties:
@@ -153,27 +209,6 @@ components:
 
         If balance="1000000" and decimals=6, the human-readable amount is 1.0 tokens'
       title: Information about a token balance held by an address
-    OnChainServiceBatchGetBalanceBody:
-      type: object
-      properties:
-        addresses:
-          type: array
-          items:
-            type: string
-          title: List of blockchain addresses to query (1-100 addresses)
-      description: 'Batch request for efficient multi-address queries on a single blockchain.
-
-        All addresses must be on the same network.
-
-
-        **Performance:**
-
-        - Single API call for up to 100 addresses
-
-        - Faster than individual requests
-
-        - Partial failures are handled gracefully'
-      title: Request for retrieving balances of multiple addresses
     rpcStatus:
       type: object
       properties:
@@ -187,19 +222,6 @@ components:
           items:
             type: object
             $ref: '#/components/schemas/protobufAny'
-    v1GetBalanceResponse:
-      type: object
-      properties:
-        chain:
-          type: string
-          title: Chain identifier matching the request
-        balance:
-          $ref: '#/components/schemas/v1Balance'
-          title: Balance information including native and token balances
-      description: 'Returns the native currency balance and any token holdings for the requested address.
-
-        For chains that don''t support tokens, the tokens array will be empty.'
-      title: Response containing balance information for a single address
     v1BatchGetBalanceResponse:
       type: object
       properties:
@@ -216,49 +238,6 @@ components:
 
         If individual addresses fail, their error field will contain details while other addresses return successfully.'
       title: Response containing balance information for multiple addresses
-    v1Balance:
-      type: object
-      properties:
-        address:
-          type: string
-          title: Blockchain address that was queried
-        balance:
-          type: string
-          title: Native balance in smallest unit (satoshi, wei, lamport, drop) as string
-        unit:
-          type: string
-          title: Unit name of the native balance (e.g., "satoshi", "wei", "lamport", "drop")
-        tokens:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1TokenBalance'
-          title: List of token balances held by this address (empty for non-token chains)
-        error:
-          type: string
-          title: Error message if the address query failed (empty string on success)
-      description: 'Contains the native currency balance and any token holdings.
-
-        Amounts are returned as strings in the smallest unit to preserve precision.
-
-
-        **Native Balance Units:**
-
-        - Bitcoin: satoshi (1 BTC = 100,000,000 satoshi)
-
-        - Ethereum/Ethereum Classic: wei (1 ETH = 1,000,000,000,000,000,000 wei)
-
-        - Solana: lamport (1 SOL = 1,000,000,000 lamport)
-
-        - XRP: drop (1 XRP = 1,000,000 drops)
-
-
-        **Error Handling:**
-
-        If an error occurs (invalid address, network issue, etc.), the error field will contain details
-
-        and the balance/tokens fields may be empty or partial.'
-      title: Balance information for a blockchain address
     v1ChainInfo:
       type: object
       properties:
@@ -297,6 +276,27 @@ components:
 
         - cardano_mainnet, polkadot_mainnet, stellar_mainnet, hedera_mainnet (coming soon)'
       title: Metadata about a supported blockchain network
+    OnChainServiceBatchGetBalanceBody:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+          title: List of blockchain addresses to query (1-100 addresses)
+      description: 'Batch request for efficient multi-address queries on a single blockchain.
+
+        All addresses must be on the same network.
+
+
+        **Performance:**
+
+        - Single API call for up to 100 addresses
+
+        - Faster than individual requests
+
+        - Partial failures are handled gracefully'
+      title: Request for retrieving balances of multiple addresses
   securitySchemes:
     BearerAuth:
       type: http
