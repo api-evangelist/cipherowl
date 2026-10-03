@@ -103,25 +103,6 @@ paths:
       parameters: []
 components:
   schemas:
-    protobufAny:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v1GetBalanceResponse:
-      type: object
-      properties:
-        chain:
-          type: string
-          title: Chain identifier matching the request
-        balance:
-          $ref: '#/components/schemas/v1Balance'
-          title: Balance information including native and token balances
-      description: 'Returns the native currency balance and any token holdings for the requested address.
-
-        For chains that don''t support tokens, the tokens array will be empty.'
-      title: Response containing balance information for a single address
     v1Balance:
       type: object
       properties:
@@ -178,6 +159,56 @@ components:
 
         and their capabilities before making balance queries.'
       title: Response containing list of supported blockchain chains
+    OnChainServiceBatchGetBalanceBody:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+          title: List of blockchain addresses to query (1-100 addresses)
+      description: 'Batch request for efficient multi-address queries on a single blockchain.
+
+        All addresses must be on the same network.
+
+
+        **Performance:**
+
+        - Single API call for up to 100 addresses
+
+        - Faster than individual requests
+
+        - Partial failures are handled gracefully'
+      title: Request for retrieving balances of multiple addresses
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    v1BatchGetBalanceResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: Network identifier matching the request
+        balances:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1Balance'
+          title: Balance information for each queried address (same order as request)
+      description: 'Returns balance data for all requested addresses.
+
+        If individual addresses fail, their error field will contain details while other addresses return successfully.'
+      title: Response containing balance information for multiple addresses
     v1TokenBalance:
       type: object
       properties:
@@ -209,35 +240,25 @@ components:
 
         If balance="1000000" and decimals=6, the human-readable amount is 1.0 tokens'
       title: Information about a token balance held by an address
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
-    v1BatchGetBalanceResponse:
+    v1GetBalanceResponse:
       type: object
       properties:
         chain:
           type: string
-          title: Network identifier matching the request
-        balances:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1Balance'
-          title: Balance information for each queried address (same order as request)
-      description: 'Returns balance data for all requested addresses.
+          title: Chain identifier matching the request
+        balance:
+          $ref: '#/components/schemas/v1Balance'
+          title: Balance information including native and token balances
+      description: 'Returns the native currency balance and any token holdings for the requested address.
 
-        If individual addresses fail, their error field will contain details while other addresses return successfully.'
-      title: Response containing balance information for multiple addresses
+        For chains that don''t support tokens, the tokens array will be empty.'
+      title: Response containing balance information for a single address
+    protobufAny:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
     v1ChainInfo:
       type: object
       properties:
@@ -276,27 +297,6 @@ components:
 
         - cardano_mainnet, polkadot_mainnet, stellar_mainnet, hedera_mainnet (coming soon)'
       title: Metadata about a supported blockchain network
-    OnChainServiceBatchGetBalanceBody:
-      type: object
-      properties:
-        addresses:
-          type: array
-          items:
-            type: string
-          title: List of blockchain addresses to query (1-100 addresses)
-      description: 'Batch request for efficient multi-address queries on a single blockchain.
-
-        All addresses must be on the same network.
-
-
-        **Performance:**
-
-        - Single API call for up to 100 addresses
-
-        - Faster than individual requests
-
-        - Partial failures are handled gracefully'
-      title: Request for retrieving balances of multiple addresses
   securitySchemes:
     BearerAuth:
       type: http
