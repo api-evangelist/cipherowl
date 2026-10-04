@@ -1,0 +1,27 @@
+slug: cipherowl
+provider: CipherOwl
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: SRR API
+  spec_file: cipherowl-srr-api-api-openapi.yml
+  capability_id: BC-130.10
+  capability_id_l1: BC-130
+  capability_name: Regulatory Compliance Management
+  confidence: 0.78
+  evidence: ScreenService_ScreenAddress  Screen address; sar_report_api  Get SAR report; RiskReasonService_GetAddressRiskScore  Get
+    risk score
+  reason: The operations perform sanctions/risk screening of blockchain addresses, produce 0-100 risk
+    scores with categorised breakdowns and evidence paths, and generate risk-assessment and SAR reports
+    — the core of AML/sanctions regulatory compliance. Mapped to Regulatory Compliance Management; some
+    residual ambiguity versus enterprise risk assessment framing.

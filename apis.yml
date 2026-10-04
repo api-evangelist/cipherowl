@@ -145,6 +145,9 @@ apis:
   - type: Arazzo
     url: arazzo/cipherowl-srr-investigation.yml
 common:
+- type: CapabilityMap
+  url: capabilities/cipherowl-capability-edges.yml
+  name: CipherOwl Business Capability Map
 - type: Website
   url: https://cipherowl.ai
 - type: Overlay
