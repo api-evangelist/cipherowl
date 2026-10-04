@@ -163,23 +163,27 @@ paths:
               $ref: '#/components/schemas/PrivateDataServiceUpsertEntryBody'
 components:
   schemas:
-    v1ListEntriesResponse:
+    rpcStatus:
       type: object
       properties:
-        entries:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/v1OverrideEntry'
-        nextPageToken:
-          type: string
-      title: Response with list of entries
-    v1GetEntryResponse:
-      type: object
-      properties:
-        entry:
-          $ref: '#/components/schemas/v1OverrideEntry'
-      title: Response with a specific entry
+            $ref: '#/components/schemas/protobufAny'
+    v1ListType:
+      type: string
+      enum:
+      - LIST_TYPE_UNSPECIFIED
+      - LIST_TYPE_ALLOWLIST
+      - LIST_TYPE_DENYLIST
+      default: LIST_TYPE_UNSPECIFIED
+      title: ListType enum for override entries
     PrivateDataServiceUpsertEntryBody:
       type: object
       properties:
@@ -202,25 +206,18 @@ components:
           format: int64
           title: 0 for new entries, current version for updates
       title: Request to create or update an entry
-    v1DeleteEntryResponse:
+    protobufAny:
       type: object
       properties:
-        success:
-          type: boolean
-      title: Response from delete operation
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        '@type':
           type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
+      additionalProperties: {}
+    v1GetEntryResponse:
+      type: object
+      properties:
+        entry:
+          $ref: '#/components/schemas/v1OverrideEntry'
+      title: Response with a specific entry
     v1UpsertEntryResponse:
       type: object
       properties:
@@ -230,20 +227,12 @@ components:
           type: boolean
           title: true if new entry, false if updated existing
       title: Response from upsert operation
-    protobufAny:
+    v1DeleteEntryResponse:
       type: object
       properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    v1ListType:
-      type: string
-      enum:
-      - LIST_TYPE_UNSPECIFIED
-      - LIST_TYPE_ALLOWLIST
-      - LIST_TYPE_DENYLIST
-      default: LIST_TYPE_UNSPECIFIED
-      title: ListType enum for override entries
+        success:
+          type: boolean
+      title: Response from delete operation
     v1OverrideEntry:
       type: object
       properties:
@@ -285,6 +274,17 @@ components:
         updatedBy:
           type: string
       title: Override entry
+    v1ListEntriesResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1OverrideEntry'
+        nextPageToken:
+          type: string
+      title: Response with list of entries
   securitySchemes:
     BearerAuth:
       type: http

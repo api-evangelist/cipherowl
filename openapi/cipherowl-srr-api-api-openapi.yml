@@ -552,108 +552,34 @@ paths:
       - SRR API
 components:
   schemas:
-    v1ScreenAddressResponse:
-      type: object
-      properties:
-        config:
-          type: string
-          description: 'Canonical name of the risk configuration that was actually applied.
-
-            May differ from the requested value when the request omitted `config`
-
-            and the server resolved the organization''s default.'
-        chain:
-          type: string
-          title: The blockchain network where the address exists
-        address:
-          type: string
-          title: The blockchain address that was screened
-        foundRisk:
-          type: boolean
-          title: Whether the address has a risk signal
-        version:
-          type: string
-          title: The version of the screening bloom filter used
-        explanations:
-          type: object
-          additionalProperties:
-            type: string
-          title: LLM explanations dictionary
-    apirisk_reasonv1Path:
-      type: object
-      properties:
-        addresses:
-          type: array
-          items:
-            type: string
-          title: List of addresses in the path
-      title: Transaction path representation
-    v1GetAddressRiskBreakdownResponse:
-      type: object
-      properties:
-        chain:
-          type: string
-          title: The blockchain network
-        address:
-          type: string
-          title: The blockchain address
-        config:
-          type: string
-          description: 'Canonical name of the risk configuration that was actually applied.
-
-            May differ from the requested value when the request omitted `config`
-
-            and the server resolved the organization''s default.'
-        risks:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1RiskBreakdown'
-          title: List of risk breakdowns
-      title: Response message for GetAddressRiskBreakdown
     protobufAny:
       type: object
       properties:
         '@type':
           type: string
       additionalProperties: {}
-    v1GetAddressRiskScoreResponse:
+    v1RiskScoreItem:
       type: object
       properties:
-        chain:
+        category:
           type: string
-          title: The blockchain network
-        address:
+          title: Risk category display name (e.g., "Sanctioned by US", "Scam")
+        direction:
           type: string
-          title: The blockchain address
-        config:
-          type: string
-          description: 'Canonical name of the risk configuration that was actually applied.
-
-            May differ from the requested value when the request omitted `config`
-
-            and the server resolved the organization''s default.'
-        riskProfile:
-          type: string
-          title: The risk profile used for scoring
-        riskScore:
+          title: 'Direction of exposure: "DIRECT", "SEND", or "RECEIVE"'
+        hops:
+          type: integer
+          format: int32
+          title: Number of hops to the risk source (0 for direct)
+        usdValue:
           type: number
           format: double
-          title: Computed risk score (0-100, hard-capped)
-        riskBand:
-          type: string
-          title: 'Risk band classification: "Low Risk", "Medium Risk", "High Risk", or "Severe Risk"'
-        breakdown:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1RiskScoreItem'
-          title: Detailed breakdown of risk contributions
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp of the computation
-      title: Response message for GetAddressRiskScore
+          title: USD value of the exposure
+        riskContribution:
+          type: number
+          format: double
+          title: Contribution of this item to the overall risk score
+      title: Individual risk contribution in the score breakdown
     ScreenServiceBatchScreenAddressesBody:
       type: object
       properties:
@@ -695,25 +621,35 @@ components:
         trackAlert:
           type: boolean
           description: Explicitly opt this request into alert tracking. Default/omitted is false.
-    v1ChainAddress:
+    v1BatchScreenAddressesResponse:
       type: object
       properties:
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied to
+
+            every address in this batch. May differ from the requested value when
+
+            the request omitted `config` and the server resolved the
+
+            organization''s default.'
         chain:
           type: string
-          title: The chain name (e.g., evm, bitcoin, solana, tron)
-        address:
+          title: The blockchain network where the addresses exist
+        results:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1AddressResult'
+          title: The screening results for each address
+        version:
           type: string
-          title: The address on that chain
-      title: Chain-address pair for cross-chain path representation
-    v1TransactionDirection:
-      type: string
-      enum:
-      - TRANSACTION_DIRECTION_UNSPECIFIED
-      - SEND
-      - RECEIVE
-      default: TRANSACTION_DIRECTION_UNSPECIFIED
-      description: "- TRANSACTION_DIRECTION_UNSPECIFIED: Default value for unspecified direction\n - SEND: Transaction sent from the address\n - RECEIVE: Transaction received by the address"
-      title: TransactionDirection represents the direction of a transaction flow
+          title: The version of the screening bloom filter used
+        explanations:
+          type: object
+          additionalProperties:
+            type: string
+          title: LLM explanations dictionary
     v1GetAddressRiskReasonDetailResponse:
       type: object
       properties:
@@ -739,36 +675,6 @@ components:
             $ref: '#/components/schemas/v1AddressRiskReasonDetailItem'
           title: List of detailed risk reasons of this address
       title: Response message for GetAddressRiskReasonDetail
-    EvidenceReport:
-      properties:
-        risk_level:
-          $ref: '#/components/schemas/RiskLevel'
-          description: 'DEPRECATED: Use found_risk instead. This field will be removed in a future version.'
-          deprecated: true
-        found_risk:
-          type: boolean
-          title: Found Risk
-          description: Boolean indicating whether risk was found for the address
-        report:
-          title: Report
-          type:
-          - string
-          - 'null'
-        error:
-          title: Error
-          type:
-          - string
-          - 'null'
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-      type: object
-      required:
-      - risk_level
-      - found_risk
-      - timestamp
-      title: EvidenceReport
     v1RiskBreakdown:
       type: object
       properties:
@@ -796,15 +702,6 @@ components:
           format: double
           title: Total USD value of exposure to this risk category - only for INDIRECT
       title: Risk breakdown detail
-    v1GetChainCapabilitiesResponse:
-      type: object
-      properties:
-        capabilities:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/v1ChainCapability'
-          title: Chain capabilities mapping chain key to its capabilities
-      title: Response message for GetChainCapabilities
     v1AddressRiskReasonDetailItem:
       type: object
       properties:
@@ -860,37 +757,24 @@ components:
 
             Each path contains chain-address pairs showing the chain for each address'
       title: Detailed risk information for v1 API (full details)
-    v1RiskScoreItem:
+    v1GetChainCapabilitiesResponse:
       type: object
       properties:
-        category:
+        capabilities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/v1ChainCapability'
+          title: Chain capabilities mapping chain key to its capabilities
+      title: Response message for GetChainCapabilities
+    v1AddressResult:
+      type: object
+      properties:
+        address:
           type: string
-          title: Risk category display name (e.g., "Sanctioned by US", "Scam")
-        direction:
-          type: string
-          title: 'Direction of exposure: "DIRECT", "SEND", or "RECEIVE"'
-        hops:
-          type: integer
-          format: int32
-          title: Number of hops to the risk source (0 for direct)
-        usdValue:
-          type: number
-          format: double
-          title: USD value of the exposure
-        riskContribution:
-          type: number
-          format: double
-          title: Contribution of this item to the overall risk score
-      title: Individual risk contribution in the score breakdown
-    v1RiskType:
-      type: string
-      enum:
-      - RISK_TYPE_UNSPECIFIED
-      - DIRECT
-      - INDIRECT
-      default: RISK_TYPE_UNSPECIFIED
-      description: "- RISK_TYPE_UNSPECIFIED: Default value for unspecified risk type\n - DIRECT: Direct exposure to risky entity\n - INDIRECT: Indirect exposure to risky entity (through intermediaries)"
-      title: RiskType represents the type of risk exposure
+          title: The blockchain address that was screened
+        foundRisk:
+          type: boolean
+          title: Whether the address has a risk signal
     rpcStatus:
       type: object
       properties:
@@ -904,6 +788,126 @@ components:
           items:
             type: object
             $ref: '#/components/schemas/protobufAny'
+    v1GetAddressRiskScoreResponse:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: The blockchain network
+        address:
+          type: string
+          title: The blockchain address
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied.
+
+            May differ from the requested value when the request omitted `config`
+
+            and the server resolved the organization''s default.'
+        riskProfile:
+          type: string
+          title: The risk profile used for scoring
+        riskScore:
+          type: number
+          format: double
+          title: Computed risk score (0-100, hard-capped)
+        riskBand:
+          type: string
+          title: 'Risk band classification: "Low Risk", "Medium Risk", "High Risk", or "Severe Risk"'
+        breakdown:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1RiskScoreItem'
+          title: Detailed breakdown of risk contributions
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp of the computation
+      title: Response message for GetAddressRiskScore
+    RiskLevel:
+      type: string
+      enum:
+      - high
+      - medium
+      - low
+      - nondeterministic
+      title: RiskLevel
+      description: 'DEPRECATED: Risk level classification. Use found_risk boolean instead.'
+    v1PathWithChain:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v1ChainAddress'
+          title: List of chain-address pairs in the path
+      title: Path with chain information for cross-chain transactions
+    v1RiskType:
+      type: string
+      enum:
+      - RISK_TYPE_UNSPECIFIED
+      - DIRECT
+      - INDIRECT
+      default: RISK_TYPE_UNSPECIFIED
+      description: "- RISK_TYPE_UNSPECIFIED: Default value for unspecified risk type\n - DIRECT: Direct exposure to risky entity\n - INDIRECT: Indirect exposure to risky entity (through intermediaries)"
+      title: RiskType represents the type of risk exposure
+    v1ChainAddress:
+      type: object
+      properties:
+        chain:
+          type: string
+          title: The chain name (e.g., evm, bitcoin, solana, tron)
+        address:
+          type: string
+          title: The address on that chain
+      title: Chain-address pair for cross-chain path representation
+    v1ScreenAddressResponse:
+      type: object
+      properties:
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied.
+
+            May differ from the requested value when the request omitted `config`
+
+            and the server resolved the organization''s default.'
+        chain:
+          type: string
+          title: The blockchain network where the address exists
+        address:
+          type: string
+          title: The blockchain address that was screened
+        foundRisk:
+          type: boolean
+          title: Whether the address has a risk signal
+        version:
+          type: string
+          title: The version of the screening bloom filter used
+        explanations:
+          type: object
+          additionalProperties:
+            type: string
+          title: LLM explanations dictionary
+    v1TransactionDirection:
+      type: string
+      enum:
+      - TRANSACTION_DIRECTION_UNSPECIFIED
+      - SEND
+      - RECEIVE
+      default: TRANSACTION_DIRECTION_UNSPECIFIED
+      description: "- TRANSACTION_DIRECTION_UNSPECIFIED: Default value for unspecified direction\n - SEND: Transaction sent from the address\n - RECEIVE: Transaction received by the address"
+      title: TransactionDirection represents the direction of a transaction flow
+    apirisk_reasonv1Path:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+          title: List of addresses in the path
+      title: Transaction path representation
     v1ChainCapability:
       type: object
       properties:
@@ -928,63 +932,59 @@ components:
 
             and related investigative tooling.'
       title: Capability details for a single chain
-    v1PathWithChain:
+    v1GetAddressRiskBreakdownResponse:
       type: object
       properties:
-        addresses:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v1ChainAddress'
-          title: List of chain-address pairs in the path
-      title: Path with chain information for cross-chain transactions
-    v1AddressResult:
-      type: object
-      properties:
-        address:
-          type: string
-          title: The blockchain address that was screened
-        foundRisk:
-          type: boolean
-          title: Whether the address has a risk signal
-    v1BatchScreenAddressesResponse:
-      type: object
-      properties:
-        config:
-          type: string
-          description: 'Canonical name of the risk configuration that was actually applied to
-
-            every address in this batch. May differ from the requested value when
-
-            the request omitted `config` and the server resolved the
-
-            organization''s default.'
         chain:
           type: string
-          title: The blockchain network where the addresses exist
-        results:
+          title: The blockchain network
+        address:
+          type: string
+          title: The blockchain address
+        config:
+          type: string
+          description: 'Canonical name of the risk configuration that was actually applied.
+
+            May differ from the requested value when the request omitted `config`
+
+            and the server resolved the organization''s default.'
+        risks:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/v1AddressResult'
-          title: The screening results for each address
-        version:
+            $ref: '#/components/schemas/v1RiskBreakdown'
+          title: List of risk breakdowns
+      title: Response message for GetAddressRiskBreakdown
+    EvidenceReport:
+      properties:
+        risk_level:
+          $ref: '#/components/schemas/RiskLevel'
+          description: 'DEPRECATED: Use found_risk instead. This field will be removed in a future version.'
+          deprecated: true
+        found_risk:
+          type: boolean
+          title: Found Risk
+          description: Boolean indicating whether risk was found for the address
+        report:
+          title: Report
+          type:
+          - string
+          - 'null'
+        error:
+          title: Error
+          type:
+          - string
+          - 'null'
+        timestamp:
           type: string
-          title: The version of the screening bloom filter used
-        explanations:
-          type: object
-          additionalProperties:
-            type: string
-          title: LLM explanations dictionary
-    RiskLevel:
-      type: string
-      enum:
-      - high
-      - medium
-      - low
-      - nondeterministic
-      title: RiskLevel
-      description: 'DEPRECATED: Risk level classification. Use found_risk boolean instead.'
+          format: date-time
+          title: Timestamp
+      type: object
+      required:
+      - risk_level
+      - found_risk
+      - timestamp
+      title: EvidenceReport
   securitySchemes:
     BearerAuth:
       type: http
