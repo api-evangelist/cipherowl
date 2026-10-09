@@ -6,6 +6,17 @@ info:
     Screen a blockchain address, and when it is risky, drill down through score,
     breakdown, and path-level evidence, then generate an analyst-ready risk
     assessment. Seeded with co-sandbox test values so a fork runs for free.
+  x-realizes-capability-ids:
+  - BC-130.10
+  x-capability-derivation:
+    method: 'deterministic join: sourceDescriptions -> per-tag OpenAPI -> tag/capability edge. No classification at this step.'
+    min_confidence: 0.7
+    sources:
+    - capability_id: BC-130.10
+      capability_name: Regulatory Compliance Management
+      spec: cipherowl-srr-api-api-openapi.yml
+      confidence: 0.78
+    model: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities, CC BY 4.0
 sourceDescriptions:
 - name: srrApiApi
   url: ../openapi/cipherowl-srr-api-api-openapi.yml
