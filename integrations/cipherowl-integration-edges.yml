@@ -1,0 +1,41 @@
+edges:
+- partner_name: Coinbase CDP x402 Bazaar
+  partner: coinbase
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=1000
+  mirror_of: coinbase/integrations/coinbase-integration-edges.yml
+  apps:
+  - CipherOwl ExpressScan
+  resources: 2
+  detected: '2026-10-21'
+  detected_by: sweep-x402-micropayments.py
+generated: '2026-10-21'
+method: searched
+source:
+- https://x402.org/members/
+- https://docs.x402.org/dev-tools/facilitators
+- https://docs.cdp.coinbase.com/x402/
+- https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources
+- https://www.x402.org/ecosystem
+- https://x402scan.com
+- https://agentic.market
+- https://pay.sh
+- https://app.ampersend.ai/discover
+- https://x402-list.com
+checked:
+- https://agentic.market
+- https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources
+- https://app.ampersend.ai/discover
+- https://docs.cdp.coinbase.com/x402/
+- https://docs.x402.org/dev-tools/facilitators
+- https://pay.sh
+- https://www.x402.org/ecosystem
+- https://x402-list.com
+- https://x402.org/members/
+- https://x402scan.com
