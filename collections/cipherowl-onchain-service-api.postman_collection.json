@@ -1,529 +1,575 @@
 {
+  "info": {
+    "_postman_id": "dd29e381-167e-4526-87ed-e290d6e55da0",
+    "name": "CipherOwl Onchain Service API",
+    "description": "CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T03:08:28.000Z",
+    "updatedAt": "2026-10-22T03:08:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-dd29e381-167e-4526-87ed-e290d6e55da0"
+  },
   "item": [
     {
-      "id": "6589b824-ffc6-40c7-8510-1eae936c82de",
-      "name": "Onchain Service",
-      "description": {
-        "content": "Query blockchain balances and supported chain metadata across multiple networks.",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "833bf52c-050d-448c-903c-40ea170986ac",
-          "name": "Batch get balances",
-          "request": {
-            "name": "Batch get balances",
-            "description": {
-              "content": "Retrieves balance information for up to 100 addresses on the same blockchain in a single efficient request. Partial failures are supported - if some addresses fail, successful results are still returned with error details for failed addresses.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "onchain",
-                "v1",
-                "chains",
-                ":chain",
-                "balances:batchget"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "chain",
-                  "description": "(Required) Network identifier - all addresses must be on this chain"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "onchain",
+          "item": [
             {
-              "id": "870b2303-c0b8-4a81-80ae-fe37bbf2bc14",
-              "name": "A successful response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "onchain",
-                    "v1",
-                    "chains",
-                    ":chain",
-                    "balances:batchget"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "chain",
-                      "description": "(Required) Network identifier - all addresses must be on this chain"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "v1",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "chains",
+                  "item": [
+                    {
+                      "name": "{chain}",
+                      "item": [
+                        {
+                          "name": "balances:batchget",
+                          "item": [
+                            {
+                              "name": "Batch get balances",
+                              "id": "51da30ba-cbc7-405a-babf-81066aa39bb6",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/onchain/v1/chains/:chain/balances:batchget",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "onchain",
+                                    "v1",
+                                    "chains",
+                                    ":chain",
+                                    "balances:batchget"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "b2e1ae36-affc-4919-8cc5-5e1d03188773",
+                                      "key": "chain",
+                                      "value": "<string>",
+                                      "description": "(Required) Network identifier - all addresses must be on this chain"
+                                    }
+                                  ]
+                                },
+                                "description": "Retrieves balance information for up to 100 addresses on the same blockchain in a single efficient request. Partial failures are supported - if some addresses fail, successful results are still returned with error details for failed addresses."
+                              },
+                              "response": [
+                                {
+                                  "id": "7d03560d-48bc-4fa5-8d25-85ee14883d08",
+                                  "name": "A successful response.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/onchain/v1/chains/:chain/balances:batchget",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "onchain",
+                                        "v1",
+                                        "chains",
+                                        ":chain",
+                                        "balances:batchget"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "chain"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"chain\": \"<string>\",\n  \"balances\": [\n    {\n      \"address\": \"<string>\",\n      \"balance\": \"<string>\",\n      \"unit\": \"<string>\",\n      \"tokens\": [\n        {\n          \"contract\": \"<string>\",\n          \"name\": \"<string>\",\n          \"symbol\": \"<string>\",\n          \"balance\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"contract\": \"<string>\",\n          \"name\": \"<string>\",\n          \"symbol\": \"<string>\",\n          \"balance\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"type\": \"<string>\"\n        }\n      ],\n      \"error\": \"<string>\"\n    },\n    {\n      \"address\": \"<string>\",\n      \"balance\": \"<string>\",\n      \"unit\": \"<string>\",\n      \"tokens\": [\n        {\n          \"contract\": \"<string>\",\n          \"name\": \"<string>\",\n          \"symbol\": \"<string>\",\n          \"balance\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"contract\": \"<string>\",\n          \"name\": \"<string>\",\n          \"symbol\": \"<string>\",\n          \"balance\": \"<string>\",\n          \"decimals\": \"<integer>\",\n          \"type\": \"<string>\"\n        }\n      ],\n      \"error\": \"<string>\"\n    }\n  ]\n}",
+                                  "createdAt": "2026-10-22T03:08:28.000Z",
+                                  "updatedAt": "2026-10-22T03:08:28.000Z",
+                                  "uid": "35240-7d03560d-48bc-4fa5-8d25-85ee14883d08"
+                                },
+                                {
+                                  "id": "d39f71ed-34f8-41bf-9a74-696fd8512549",
+                                  "name": "An unexpected error response.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/onchain/v1/chains/:chain/balances:batchget",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "onchain",
+                                        "v1",
+                                        "chains",
+                                        ":chain",
+                                        "balances:batchget"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "chain"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Internal Server Error",
+                                  "code": 500,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"@type\": \"<string>\"\n    },\n    {\n      \"@type\": \"<string>\",\n      \"magna6\": {},\n      \"cupidatat_80f\": {},\n      \"Lorem_92\": {},\n      \"essefd\": {}\n    }\n  ]\n}",
+                                  "createdAt": "2026-10-22T03:08:28.000Z",
+                                  "updatedAt": "2026-10-22T03:08:28.000Z",
+                                  "uid": "35240-d39f71ed-34f8-41bf-9a74-696fd8512549"
+                                }
+                              ],
+                              "createdAt": "2026-10-22T03:08:28.000Z",
+                              "updatedAt": "2026-10-22T03:08:28.000Z",
+                              "uid": "35240-51da30ba-cbc7-405a-babf-81066aa39bb6"
+                            }
+                          ],
+                          "id": "110247b8-5747-4295-9335-79b1218ccf32",
+                          "createdAt": "2026-10-22T03:08:28.000Z",
+                          "updatedAt": "2026-10-22T03:08:28.000Z",
+                          "uid": "35240-110247b8-5747-4295-9335-79b1218ccf32"
+                        },
+                        {
+                          "name": "addresses",
+                          "item": [
+                            {
+                              "name": "{address}",
+                              "item": [
+                                {
+                                  "name": "balance",
+                                  "item": [
+                                    {
+                                      "name": "Get balance",
+                                      "id": "c9a7d0f5-8154-4144-9760-491ff9892bf7",
+                                      "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                      },
+                                      "request": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/api/onchain/v1/chains/:chain/addresses/:address/balance",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "api",
+                                            "onchain",
+                                            "v1",
+                                            "chains",
+                                            ":chain",
+                                            "addresses",
+                                            ":address",
+                                            "balance"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "id": "e10e2f47-db5c-4aa1-8000-74a4cf755f7c",
+                                              "key": "chain",
+                                              "value": "<string>",
+                                              "description": "(Required) Network identifier (bitcoin_mainnet, ethereum_mainnet, ethereum_classic_mainnet, xrp_mainnet, solana_mainnet, etc.)"
+                                            },
+                                            {
+                                              "id": "2c704aff-ab5a-47df-a1f5-18bd764b0bcf",
+                                              "key": "address",
+                                              "value": "<string>",
+                                              "description": "(Required) Blockchain address to query (format depends on chain)"
+                                            }
+                                          ]
+                                        },
+                                        "description": "Retrieves native currency balance and token holdings for a single blockchain address. Token balances are automatically included for chains that support them (Ethereum, Solana, XRP, Avalanche, etc.)."
+                                      },
+                                      "response": [
+                                        {
+                                          "id": "486faff2-010c-4414-b01e-9ab4d97b04f6",
+                                          "name": "A successful response.",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/onchain/v1/chains/:chain/addresses/:address/balance",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "onchain",
+                                                "v1",
+                                                "chains",
+                                                ":chain",
+                                                "addresses",
+                                                ":address",
+                                                "balance"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "chain"
+                                                },
+                                                {
+                                                  "key": "address"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "OK",
+                                          "code": 200,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"chain\": \"<string>\",\n  \"balance\": {\n    \"address\": \"<string>\",\n    \"balance\": \"<string>\",\n    \"unit\": \"<string>\",\n    \"tokens\": [\n      {\n        \"contract\": \"<string>\",\n        \"name\": \"<string>\",\n        \"symbol\": \"<string>\",\n        \"balance\": \"<string>\",\n        \"decimals\": \"<integer>\",\n        \"type\": \"<string>\"\n      },\n      {\n        \"contract\": \"<string>\",\n        \"name\": \"<string>\",\n        \"symbol\": \"<string>\",\n        \"balance\": \"<string>\",\n        \"decimals\": \"<integer>\",\n        \"type\": \"<string>\"\n      }\n    ],\n    \"error\": \"<string>\"\n  }\n}",
+                                          "createdAt": "2026-10-22T03:08:28.000Z",
+                                          "updatedAt": "2026-10-22T03:08:28.000Z",
+                                          "uid": "35240-486faff2-010c-4414-b01e-9ab4d97b04f6"
+                                        },
+                                        {
+                                          "id": "48caa771-35bb-4dcf-a0a4-b24490b632fe",
+                                          "name": "An unexpected error response.",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: bearer",
+                                                "key": "Authorization",
+                                                "value": "Bearer <token>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/api/onchain/v1/chains/:chain/addresses/:address/balance",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "api",
+                                                "onchain",
+                                                "v1",
+                                                "chains",
+                                                ":chain",
+                                                "addresses",
+                                                ":address",
+                                                "balance"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "chain"
+                                                },
+                                                {
+                                                  "key": "address"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Internal Server Error",
+                                          "code": 500,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"@type\": \"<string>\"\n    },\n    {\n      \"@type\": \"<string>\",\n      \"magna6\": {},\n      \"cupidatat_80f\": {},\n      \"Lorem_92\": {},\n      \"essefd\": {}\n    }\n  ]\n}",
+                                          "createdAt": "2026-10-22T03:08:28.000Z",
+                                          "updatedAt": "2026-10-22T03:08:28.000Z",
+                                          "uid": "35240-48caa771-35bb-4dcf-a0a4-b24490b632fe"
+                                        }
+                                      ],
+                                      "createdAt": "2026-10-22T03:08:28.000Z",
+                                      "updatedAt": "2026-10-22T03:08:28.000Z",
+                                      "uid": "35240-c9a7d0f5-8154-4144-9760-491ff9892bf7"
+                                    }
+                                  ],
+                                  "id": "af7f85b0-ab9b-442d-90f6-19a6bc6b1008",
+                                  "createdAt": "2026-10-22T03:08:28.000Z",
+                                  "updatedAt": "2026-10-22T03:08:28.000Z",
+                                  "uid": "35240-af7f85b0-ab9b-442d-90f6-19a6bc6b1008"
+                                }
+                              ],
+                              "id": "cfb3e136-1085-4cd9-99e7-27d921e87915",
+                              "createdAt": "2026-10-22T03:08:28.000Z",
+                              "updatedAt": "2026-10-22T03:08:28.000Z",
+                              "uid": "35240-cfb3e136-1085-4cd9-99e7-27d921e87915"
+                            }
+                          ],
+                          "id": "a9d4a43c-123c-4159-80fe-44fa09e4e0a5",
+                          "createdAt": "2026-10-22T03:08:28.000Z",
+                          "updatedAt": "2026-10-22T03:08:28.000Z",
+                          "uid": "35240-a9d4a43c-123c-4159-80fe-44fa09e4e0a5"
+                        }
+                      ],
+                      "id": "082463ba-7386-49f8-937c-a6e363c66375",
+                      "createdAt": "2026-10-22T03:08:28.000Z",
+                      "updatedAt": "2026-10-22T03:08:28.000Z",
+                      "uid": "35240-082463ba-7386-49f8-937c-a6e363c66375"
+                    },
+                    {
+                      "name": "List chains",
+                      "id": "a4b25e23-7d7b-45e0-bbf3-3106390ea396",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/onchain/v1/chains",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "onchain",
+                            "v1",
+                            "chains"
+                          ]
+                        },
+                        "description": "Returns metadata for all blockchain networks supported by this service, including chain identifiers, names, native units, and token support capabilities."
+                      },
+                      "response": [
+                        {
+                          "id": "a5f1c57b-cae1-43bf-bfa9-8598d67cdf6e",
+                          "name": "A successful response.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/onchain/v1/chains",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "onchain",
+                                "v1",
+                                "chains"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"chains\": [\n    {\n      \"chain\": \"<string>\",\n      \"name\": \"<string>\",\n      \"symbol\": \"<string>\",\n      \"supportsTokens\": \"<boolean>\"\n    },\n    {\n      \"chain\": \"<string>\",\n      \"name\": \"<string>\",\n      \"symbol\": \"<string>\",\n      \"supportsTokens\": \"<boolean>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-10-22T03:08:28.000Z",
+                          "updatedAt": "2026-10-22T03:08:28.000Z",
+                          "uid": "35240-a5f1c57b-cae1-43bf-bfa9-8598d67cdf6e"
+                        },
+                        {
+                          "id": "a413e892-e98a-478a-a79c-91cc5ed88976",
+                          "name": "An unexpected error response.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/onchain/v1/chains",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "onchain",
+                                "v1",
+                                "chains"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"@type\": \"<string>\"\n    },\n    {\n      \"@type\": \"<string>\",\n      \"magna6\": {},\n      \"cupidatat_80f\": {},\n      \"Lorem_92\": {},\n      \"essefd\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-10-22T03:08:28.000Z",
+                          "updatedAt": "2026-10-22T03:08:28.000Z",
+                          "uid": "35240-a413e892-e98a-478a-a79c-91cc5ed88976"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T03:08:28.000Z",
+                      "updatedAt": "2026-10-22T03:08:28.000Z",
+                      "uid": "35240-a4b25e23-7d7b-45e0-bbf3-3106390ea396"
+                    }
+                  ],
+                  "id": "a83ee288-a0dd-485a-bd98-a5a06b57c750",
+                  "createdAt": "2026-10-22T03:08:28.000Z",
+                  "updatedAt": "2026-10-22T03:08:28.000Z",
+                  "uid": "35240-a83ee288-a0dd-485a-bd98-a5a06b57c750"
                 }
               ],
-              "body": "{\n  \"chain\": \"string\",\n  \"balances\": [\n    {\n      \"address\": \"string\",\n      \"balance\": \"string\",\n      \"unit\": \"string\",\n      \"tokens\": [\n        {\n          \"contract\": \"string\",\n          \"name\": \"string\",\n          \"symbol\": \"string\",\n          \"balance\": \"string\",\n          \"decimals\": 3000,\n          \"type\": \"string\"\n        },\n        {\n          \"contract\": \"string\",\n          \"name\": \"string\",\n          \"symbol\": \"string\",\n          \"balance\": \"string\",\n          \"decimals\": 4138,\n          \"type\": \"string\"\n        }\n      ],\n      \"error\": \"string\"\n    },\n    {\n      \"address\": \"string\",\n      \"balance\": \"string\",\n      \"unit\": \"string\",\n      \"tokens\": [\n        {\n          \"contract\": \"string\",\n          \"name\": \"string\",\n          \"symbol\": \"string\",\n          \"balance\": \"string\",\n          \"decimals\": 7337,\n          \"type\": \"string\"\n        },\n        {\n          \"contract\": \"string\",\n          \"name\": \"string\",\n          \"symbol\": \"string\",\n          \"balance\": \"string\",\n          \"decimals\": 6594,\n          \"type\": \"string\"\n        }\n      ],\n      \"error\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "bca2e54d-8d7c-4299-a7b2-4de398840062",
-              "name": "An unexpected error response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "onchain",
-                    "v1",
-                    "chains",
-                    ":chain",
-                    "balances:batchget"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "chain",
-                      "description": "(Required) Network identifier - all addresses must be on this chain"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"addresses\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 3260,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\"\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "13244539-0570-4092-95a2-185d28caa6fc",
+              "createdAt": "2026-10-22T03:08:28.000Z",
+              "updatedAt": "2026-10-22T03:08:28.000Z",
+              "uid": "35240-13244539-0570-4092-95a2-185d28caa6fc"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2e2836e8-e9d9-4109-9d17-c1bd842872d8",
-          "name": "Get balance",
-          "request": {
-            "name": "Get balance",
-            "description": {
-              "content": "Retrieves native currency balance and token holdings for a single blockchain address. Token balances are automatically included for chains that support them (Ethereum, Solana, XRP, Avalanche, etc.).",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "onchain",
-                "v1",
-                "chains",
-                ":chain",
-                "addresses",
-                ":address",
-                "balance"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "chain",
-                  "description": "(Required) Network identifier (bitcoin_mainnet, ethereum_mainnet, ethereum_classic_mainnet, xrp_mainnet, solana_mainnet, etc.)"
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "address",
-                  "description": "(Required) Blockchain address to query (format depends on chain)"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "daad7ab8-3621-45eb-a8fb-6c34a68be400",
-              "name": "A successful response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "onchain",
-                    "v1",
-                    "chains",
-                    ":chain",
-                    "addresses",
-                    ":address",
-                    "balance"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "chain",
-                      "description": "(Required) Network identifier (bitcoin_mainnet, ethereum_mainnet, ethereum_classic_mainnet, xrp_mainnet, solana_mainnet, etc.)"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "address",
-                      "description": "(Required) Blockchain address to query (format depends on chain)"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"chain\": \"string\",\n  \"balance\": {\n    \"address\": \"string\",\n    \"balance\": \"string\",\n    \"unit\": \"string\",\n    \"tokens\": [\n      {\n        \"contract\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"balance\": \"string\",\n        \"decimals\": 7602,\n        \"type\": \"string\"\n      },\n      {\n        \"contract\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"balance\": \"string\",\n        \"decimals\": 1432,\n        \"type\": \"string\"\n      }\n    ],\n    \"error\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "718aeb8b-ab1f-4bd4-88ff-3b66cdcad7f7",
-              "name": "An unexpected error response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "onchain",
-                    "v1",
-                    "chains",
-                    ":chain",
-                    "addresses",
-                    ":address",
-                    "balance"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "chain",
-                      "description": "(Required) Network identifier (bitcoin_mainnet, ethereum_mainnet, ethereum_classic_mainnet, xrp_mainnet, solana_mainnet, etc.)"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "address",
-                      "description": "(Required) Blockchain address to query (format depends on chain)"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 7425,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "c2ba7a4b-24d0-409d-8302-4d8633ec5d00",
-          "name": "List chains",
-          "request": {
-            "name": "List chains",
-            "description": {
-              "content": "Returns metadata for all blockchain networks supported by this service, including chain identifiers, names, native units, and token support capabilities.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "onchain",
-                "v1",
-                "chains"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "998ae04f-70a8-4bbc-ab80-d779687f0b6c",
-              "name": "A successful response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "onchain",
-                    "v1",
-                    "chains"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"chains\": [\n    {\n      \"chain\": \"string\",\n      \"name\": \"string\",\n      \"symbol\": \"string\",\n      \"supportsTokens\": false\n    },\n    {\n      \"chain\": \"string\",\n      \"name\": \"string\",\n      \"symbol\": \"string\",\n      \"supportsTokens\": false\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "84411fc9-c358-433d-a8d9-02543199df19",
-              "name": "An unexpected error response.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "onchain",
-                    "v1",
-                    "chains"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": 7425,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "a183c6cf-9e22-47cc-b883-bd53cf0d9266",
+          "createdAt": "2026-10-22T03:08:28.000Z",
+          "updatedAt": "2026-10-22T03:08:28.000Z",
+          "uid": "35240-a183c6cf-9e22-47cc-b883-bd53cf0d9266"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://svc.cipherowl.ai",
-      "key": "baseUrl"
+      "id": "b55b174e-757c-4fed-b410-ba06a7e26ff6",
+      "createdAt": "2026-10-22T03:08:28.000Z",
+      "updatedAt": "2026-10-22T03:08:28.000Z",
+      "uid": "35240-b55b174e-757c-4fed-b410-ba06a7e26ff6"
     }
   ],
   "auth": {
@@ -531,17 +577,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "d29cedcb-08b1-486a-97ea-301feee61880",
-    "name": "CipherOwl Onchain Service API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "CipherOwl blockchain compliance and risk assessment APIs (Screening, Risk & Reporting; Onchain; Private Data).",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://svc.cipherowl.ai"
     }
-  }
+  ]
 }
