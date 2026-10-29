@@ -1,4 +1,4 @@
-# Cipherowl
+# CipherOwl
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,6 +64,136 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cipherowl is a company surfaced as a portfolio company of general-catalyst and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+CipherOwl provides AI-powered security and compliance for institutional stablecoins and digital assets. Its Screening, Risk & Reporting (SRR) API turns a blockchain address into a compliance decision: real-time sanctions and risk screening, deterministic 0-100 risk scoring, categorized risk breakdowns, path-level exposure evidence (including cross-chain), and analyst-ready risk assessment, SAR, and risk-flow-graph reports across Bitcoin, EVM, Tron, Solana, XRP and more. The platform also offers an Onchain balance service and a Private Data override service, an OwlTrace research experience, a Strix AI investigation agent, and a first-party CLI (cipherowl-sr3) that doubles as a Model Context Protocol server. Authentication is OAuth 2.0 client-credentials.
 
-Backed by: general-catalyst
+**Areas:** Blockchain · Compliance · Cryptocurrency · Security · Risk Management · Sanctions Screening · AML · Digital Assets · Stablecoins · Web3
+
+## CipherOwl on APIs.io
+
+Everything profiled for CipherOwl is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cipherowl/](https://apis.io/providers/cipherowl/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [CipherOwl Onchain Service API](https://apis.io/apis/cipherowl/cipherowl-onchain-service-api/) — Query blockchain balances and supported chain metadata across multiple networks.
+- [CipherOwl Private Data API](https://apis.io/apis/cipherowl/cipherowl-private-data-api-api/) — Manage organization-scoped screening overrides (allowlists and denylists) for blockchain addresses.
+- [CipherOwl SRR API](https://apis.io/apis/cipherowl/cipherowl-srr-api-api/) — Screen blockchain addresses for risk, retrieve risk reasons, breakdowns, scores, and generate reports.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (1)
+
+Multi-step workflows that chain operations into a business task.
+
+- [CipherOwl SRR Investigation Funnel](https://apis.io/arazzos/cipherowl/cipherowl-srr-investigation/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cipherowl-sr3](https://apis.io/servers/cipherowl/cipherowl-sr3/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Cipherowl Agentic Access](https://apis.io/agentic-access/cipherowl/cipherowl-agentic-access/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [CipherOwl Onchain Service API](https://apis.io/collections/cipherowl/open-cipherowl-onchain-service-api/)
+- [CipherOwl Onchain Service Private Data API API](https://apis.io/collections/cipherowl/open-cipherowl-private-data-api-api/)
+- [CipherOwl Onchain Service SRR API API](https://apis.io/collections/cipherowl/open-cipherowl-srr-api-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Cipherowl Openapi Overlay](https://apis.io/overlays/cipherowl/cipherowl-openapi-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cipherowl Authentication](https://apis.io/security/cipherowl/cipherowl-authentication/)
+- [Cipherowl Domain Security](https://apis.io/security/cipherowl/cipherowl-domain-security/)
+- [Cipherowl Trust Center](https://apis.io/security/cipherowl/cipherowl-trust-center/)
+- [Cipherowl Vulnerability Disclosure](https://apis.io/security/cipherowl/cipherowl-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cipherowl.ai)
+- [Documentation](https://readme.cipherowl.ai/reference/introduction)
+- [Getting started](https://readme.cipherowl.ai/reference/build-a-client)
+- [API reference](https://readme.cipherowl.ai/reference)
+- [Pricing](https://cipherowl.com/pricing)
+- [Sign up](https://app.cipherowl.ai)
+- [Support](https://readme.cipherowl.ai/reference/support)
+- [Changelog](https://readme.cipherowl.ai/reference/release-notes)
+- [Blog](https://cipherowl.com/blog)
+- [Security](https://cipherowl.com/trust)
+- [Compliance](https://cipherowl.com/trust)
+- [Terms of service](https://cipherowl.com/terms)
+- [Privacy policy](https://cipherowl.com/privacy)
+- [GitHub](https://github.com/cipherowl-ai)
+- [Status](https://status.cipherowl.ai/)
+
+## API Evangelist rating
+
+**Kin Score 54.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 45.9 |
+| Contract governance | 18.2 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 51.8 |
+| Access clarity | 47.4 |
+
+**Agent readiness 26.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cipherowl/](https://apis.io/providers/cipherowl/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for CipherOwl: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cipherowl/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
